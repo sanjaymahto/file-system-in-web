@@ -1,0 +1,16 @@
+@import '../../../sass/variables';
+
+.directory_folder {
+    height: 85%;
+    text-align: center;
+        @at-root #{&}__image {
+            margin-top: 25%;
+        }
+}
+
+.grid_content {
+    text-align: center;
+        @at-root #{&}__paper {
+        display: inline-block;
+        }
+}
