@@ -59,7 +59,6 @@ class InfoModal extends React.Component {
             <Typography variant="subtitle1" id="simple-modal-description">
               Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
             </Typography>
-            <SimpleModalWrapped />
           </div>
         </Modal>
       </div>

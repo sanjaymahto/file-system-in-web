@@ -5,7 +5,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Navbar from '../Navbar/index';
-// import Sidebar from '../Sidebar/index';
 import './index.scss';
 
 const styles = theme => ({
