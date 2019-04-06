@@ -1,31 +1,13 @@
 import { fromJS } from 'immutable';
-import * as CONSTANTS from '../actions/constant';
+import * as CONSTANTS from './constants';
 
 const initialState = fromJS({
     // directory contents (i.e files and folders)
-    contents: [],
-    // file content Information
-    contentInfo: {},
-    // metadata of the file or folder selected
-    metaData: {},
-    // Searched file in a directory
-    searchedFile: '',
-    // Path of the current Directory
-    path: CONSTANTS.ROOT,
-    // dummy folder for file System
-    root: CONSTANTS.ROOT,
-    // Error while fetching contents
-    error: ''
+    fileSystem: null
 });
 
-/**
- * function to log error while fetching contents from API 
- * 
- * @param  {Object} state - state Object
- * @param  {Object} payload - Payload Object
- */
-function logError(state, payload) {
-    return state.set('error', payload)
+function setFileSystem(state, payload) {
+    return state.set('fileSytem', fromJS(payload));
 }
 
 
@@ -42,11 +24,8 @@ function logError(state, payload) {
 function contentReducer(state = initialState, action) {
     const { type, payload } = action;
         switch (type) {
-        case CONSTANTS.GET_ROOT_FILES:
-            return state.set('contents', fromJS(payload.files))
-                        .set('path', payload.path)
-        case CONSTANTS.ERROR:
-            return logError(state, payload);
+        case CONSTANTS.SET_FILE_SYSTEM:
+            return setFileSystem(state, payload)
         default:
             return state;
     }

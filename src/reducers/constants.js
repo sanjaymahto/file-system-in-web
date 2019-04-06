@@ -1,3 +1,3 @@
 export const ROOT = 'dummy'
-export const GET_ROOT_FILES = 'GET_ROOT_FILES';
+export const SET_FILE_SYSTEM = 'SET_FILE_SYSTEM';
 export const ERROR = 'ERROR';

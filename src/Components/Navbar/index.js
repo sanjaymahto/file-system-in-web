@@ -9,8 +9,8 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import * as actions from '../../actions/contentActions';
-import * as CONSTANTS from '../../actions/constant';
+// import * as actions from '../../actions/contentActions';
+// import * as CONSTANTS from '../../actions/constant';
 import Sidebar from '../Sidebar/index'
 //#249ccc
 const styles = theme => ({
@@ -78,14 +78,14 @@ class  Navbar extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      path: CONSTANTS.ROOT,
+      path: '',
     }
   }
 
   // Function to be invoked when path gets updated
   componentDidUpdate() {
     this.setState({
-      path: this.props.path
+      path: ''
     })
   }
 
@@ -127,16 +127,16 @@ Navbar.propTypes = {
 const mapStateToProps = (state) => {
   state = state.contentReducer.toJS();
   return {
-    contents: state.contents,
-    path: state.path,
+    contents: '',
+    path: '',
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({
-    ...actions
-  }, dispatch);
-};
+// const mapDispatchToProps = dispatch => {
+//   return bindActionCreators({
+//     ...actions
+//   }, dispatch);
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Navbar));
+export default connect(mapStateToProps, null)(withStyles(styles)(Navbar));
 
