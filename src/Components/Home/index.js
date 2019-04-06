@@ -15,6 +15,9 @@ import './index.scss';
 
 // Material UI styles for paper cards
 const styles = theme => ({
+  grid: {
+    position: 'relative'
+  },
   root: {
     flexGrow: 1,
   },
@@ -81,7 +84,7 @@ class Home extends PureComponent {
       <br/>
       <Grid className={classes.root}>
         <Grid item xs={12}>
-          <Grid container className={classes.demo} spacing={16}>
+          <Grid container className={classes.gird} spacing={16}>
               {this.getContents()}
             <Grid item xs={2} className="grid_content">
               <Paper className={`${classes.paper} directory_folder grid_content__paper`}>

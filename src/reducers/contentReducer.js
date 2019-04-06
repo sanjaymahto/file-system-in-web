@@ -4,6 +4,8 @@ import * as CONSTANTS from '../actions/constant';
 const initialState = fromJS({
     // directory contents (i.e files and folders)
     contents: [],
+    // file content Information
+    contentInfo: {},
     // metadata of the file or folder selected
     metaData: {},
     // Searched file in a directory

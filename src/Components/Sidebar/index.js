@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -55,9 +54,9 @@ class SideBar extends Component {
 
     return (
         <div>
-        <Button onClick={this.toggleDrawer('left', true)} variant="contained" color="secondary" className={classes.button}>
-            Root
-        </Button>
+        {/* <Button onClick={this.toggleDrawer('left', true)} variant="contained" color="secondary" className={classes.button}> */}
+            <img  onClick={this.toggleDrawer('left', true)} src="./hamburger.svg" alt="hamburger" style={{width:'22px', cursor:'pointer'}} />
+        {/* </Button> */}
             <SwipeableDrawer
             open={this.state.left}
             onClose={this.toggleDrawer('left', false)}

@@ -15,9 +15,9 @@ const styles = theme => ({
     listRoot: {
         maxWidth: 360,
         backgroundColor: theme.palette.background.paper,
-        position: 'relative',
-        top: '-20px',
-        left: '100px',
+        position: 'absolute',
+        top: '120px',
+        left: '150px',
         width: '150px',
         zIndex: '10'
     },
@@ -61,7 +61,7 @@ class  FileComponent extends PureComponent {
         const { visible } = this.state;
         const wasOutside = !(event.target.contains === this.root);
         
-        if (wasOutside && visible) this.setState({ visible: false, });
+        if (wasOutside && visible) this.setState({ visible: false });
     };
 
     render() {
@@ -69,7 +69,7 @@ class  FileComponent extends PureComponent {
         const { visible } = this.state;
         
         return (
-                <Grid item xs={2} className="grid_content">
+                <Grid item xs={2} className="grid_content" style={{position:'relative'}}>
                     <Paper className={`${classes.paper} grid_content__paper`}>
                     <FileIcon extension={item.extension} {...defaultStyles} />
                         {item.file}
