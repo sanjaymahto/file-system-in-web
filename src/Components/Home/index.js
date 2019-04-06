@@ -63,11 +63,11 @@ class Home extends PureComponent {
       return (<SkeletonLoader />); // Load the skeleton files and folders while props are updated
     } else {
       return (
-          contents.map((item) => {
+          contents.map((item, index) => {
             if(item.extension !== "") {
-              return(<FileComponent item={item} />)
+              return(<FileComponent key={index} item={item} />)
             }
-              return (<FolderComponent item={item} />);
+              return (<FolderComponent key={index} item={item} />);
         })
       )
   }
