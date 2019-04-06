@@ -10,8 +10,7 @@ export function formatChildren(parent,data = []){
             size: datum.size || 0,
             date: datum.date || new Date(),
             children: [],
-            path:`${parent.path}/${datum.file}`,
-            parent:parent
+            path:`${parent.path}/${datum.file}`
         }
     });
     return children
@@ -26,12 +25,7 @@ function setChildren(parent,children){
 export function getNodeInfo(parent,path){
     return getFiles(`${parent.path}${path}`)
             .then((res)=>res.json())
-            .then((res)=> {
-                console.log(res);
-                let node =  setChildren(parent,formatChildren(parent,res.files));
-               
-               return node;
-            })
+            .then((res)=>setChildren(parent,formatChildren(parent,res.files)))
 }
 
 export function getRootFileInfo(){
@@ -42,8 +36,7 @@ export function getRootFileInfo(){
         size: 0,
         date: new Date(),
         children: [],
-        path:`/${ROOT}`,
-        parent:null
+        path:`/${ROOT}`
     }
 }
 

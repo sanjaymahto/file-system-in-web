@@ -71,8 +71,8 @@ class  FileComponent extends PureComponent {
         return (
                 <Grid item xs={2} className="grid_content" style={{position:'relative'}}>
                     <Paper className={`${classes.paper} grid_content__paper`}>
-                    <FileIcon extension={item.extension} {...defaultStyles} />
-                        {item.file}
+                    <FileIcon extension={item.type} {...defaultStyles} />
+                        {item.name}
                     </Paper>
                     { (visible || null) ?
                         <div className={classes.listRoot} style={{backgroundColor:'aliceBlue'}}> 

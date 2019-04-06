@@ -7,7 +7,7 @@ const initialState = fromJS({
 });
 
 function setFileSystem(state, payload) {
-    return state.set('fileSytem', fromJS(payload));
+    return state.set('fileSystem', (payload));
 }
 
 

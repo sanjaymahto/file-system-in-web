@@ -35,25 +35,12 @@ class Explorer extends PureComponent {
 
   constructor(props) {
     super(props);
+    console.log(props)
     this.state = {
-      contents: null,
+      currentNode: props.currentNode,
     };
   }
 
-
-  // // Function to be called before mounting of the component
-  // componentWillMount() {
-  //   this.props.getDirectoryContents();
-  // }
-
-  // // Function to be called when the props will get Updated
-  // componentDidUpdate() {
-  //   this.setState({
-  //     contents: this.props.contents
-  //   }, () => {
-  //     this.getContents()
-  //   })
-  // }
 
   /**
    * Function to list all the files and folders in a particular directory
@@ -61,19 +48,14 @@ class Explorer extends PureComponent {
    * @param  {object} props - Style props
    */
   getContents = () => {
-    const { contents } = this.state
-    if(!contents){
-      return (<SkeletonLoader />); // Load the skeleton files and folders while props are updated
-    } else {
       return (
-          contents.map((item, index) => {
-            if(item.extension !== "") {
+          this.state.currentNode.children.map((item, index) => {
+            if(!item.isFolder) {
               return(<FileComponent key={index} item={item} />)
             }
               return (<FolderComponent key={index} item={item} />);
         })
       )
-  }
   }
 
   render() {
@@ -107,18 +89,6 @@ Explorer.propTypes = {
   metaData: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => {
-  state = state.contentReducer.toJS();
-  return {
-    contents: state.contents,
-    metaData: state.metaData,
-  };
-};
 
-// const mapDispatchToProps = dispatch => {
-//   return bindActionCreators({
-//     ...actions
-//   }, dispatch);
-// };
 
-export default connect(mapStateToProps, null)(withStyles(styles)(Explorer));
+export default (withStyles(styles)(Explorer));

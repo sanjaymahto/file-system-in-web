@@ -27,27 +27,18 @@ class Home extends PureComponent {
         if(!(state.fileSystem && state.currentNode)){
             return { fetchFiles : true }
         }
-        else{
-            return {
-                fileSystem : props.fileSystem,
-                currentNode : props.currentNode,
-                fetchFiles : false
-            }
-        }
+        return null;
     }
 
     getRootFiles(){
         const root = getRootFileInfo();
         getNodeInfo(root,'').then(res=>{
-            console.log(res)
+            this.props.setFileSystem(updateFileSystem(null,res));
             this.setState({
                 currentNode : res,
                 fileSystem: { ...root, ...res},
                 fetchFiles: false
-            },() => {
-                this.props.setFileSystem(updateFileSystem(null,res));    
-            })
-            
+            });
         });
         
     }
@@ -61,7 +52,7 @@ class Home extends PureComponent {
         else {
             return (
                 <>
-                    <SideBar fileSystem = {this.state.fileSystem}/>
+                    {/* <SideBar fileSystem = {this.state.fileSystem}/> */}
                     <Explorer currentNode = {this.state.currentNode}/>
                 </>
             )
