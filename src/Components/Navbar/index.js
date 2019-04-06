@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -7,6 +9,8 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
+import * as actions from '../../actions/contentActions';
+import * as CONSTANTS from '../../actions/constant';
 import Sidebar from '../Sidebar/index'
 
 const styles = theme => ({
@@ -69,38 +73,70 @@ const styles = theme => ({
   },
 });
 
-function Navbar(props) {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-        <Sidebar />
-           <img src="/upArrow.svg" alt="uparrow" style={{paddingLeft:'10%', paddingRight:'5px'}} /> 
-          <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-            <span style={{paddingLeft:'5px', paddingRight:'5px'}}>Directory Info</span>
-          </Typography>
-          <div className={classes.grow} />
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+class  Navbar extends PureComponent {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      path: CONSTANTS.ROOT,
+    }
+  }
+
+  // Function to be invoked when path gets updated
+  componentDidUpdate() {
+    this.setState({
+      path: this.props.path
+    })
+  }
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+          <Sidebar contents={this.props.contents}/>
+            <img src="/upArrow.svg" alt="uparrow" style={{paddingLeft:'3%', paddingRight:'5px'}} /> 
+            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+              <span style={{paddingLeft:'5px', paddingRight:'5px'}}>{this.state.path}</span>
+            </Typography>
+            <div className={classes.grow} />
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+              />
             </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-            />
-          </div>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
+  }
 }
 
 Navbar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Navbar);
+const mapStateToProps = (state) => {
+  state = state.contentReducer.toJS();
+  return {
+    contents: state.contents,
+    path: state.path,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+    ...actions
+  }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Navbar));
+
