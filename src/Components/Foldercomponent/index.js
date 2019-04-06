@@ -26,7 +26,7 @@ class  FolderComponent extends PureComponent {
                 <Paper className={`${classes.paper} directory_folder grid_content__paper`}>
                     <div className="directory_folder__image">
                         <img src="https://img.icons8.com/nolan/64/000000/opened-folder.png" alt="Folder"/>
-                            {item.name}
+                            {item.value}
                     </div>
                 </Paper>
             </Grid>);

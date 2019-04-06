@@ -4,8 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Explorer from '../Explorer/index';
 import SideBar from '../Sidebar/index';
+import Navbar from '../Navbar/index';
 import * as actions from './actions';
-import { ROOT } from './constants';
 import { getNodeInfo ,getRootFileInfo ,updateFileSystem} from '../../utils'
 import './index.scss';
 
@@ -52,7 +52,8 @@ class Home extends PureComponent {
         else {
             return (
                 <>
-                    {/* <SideBar fileSystem = {this.state.fileSystem}/> */}
+                    <Navbar fileSystem = {this.state.fileSystem}
+                            currentNode = {this.state.currentNode} />
                     <Explorer currentNode = {this.state.currentNode}/>
                 </>
             )

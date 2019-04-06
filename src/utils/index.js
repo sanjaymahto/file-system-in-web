@@ -4,12 +4,12 @@ import { ROOT } from './constants'
 export function formatChildren(parent,data = []){
     const children = data.map(datum => {
         return {
-            name : datum.file,
+            value : datum.file,
             type : datum.type,
             isFolder : !datum.type,
             size: datum.size || 0,
             date: datum.date || new Date(),
-            children: [],
+            nodes: [],
             path:`${parent.path}/${datum.file}`
         }
     });
@@ -17,7 +17,7 @@ export function formatChildren(parent,data = []){
 }
 
 function setChildren(parent,children){
-    parent['children'] = children;
+    parent['nodes'] = children;
 
     return  parent;
 }
@@ -30,12 +30,12 @@ export function getNodeInfo(parent,path){
 
 export function getRootFileInfo(){
     return {
-        name : '/',
+        value : '/',
         type : '',
         isFolder : true,
         size: 0,
         date: new Date(),
-        children: [],
+        nodes: [],
         path:`/${ROOT}`
     }
 }

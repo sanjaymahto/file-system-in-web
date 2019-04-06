@@ -49,7 +49,7 @@ class Explorer extends PureComponent {
    */
   getContents = () => {
       return (
-          this.state.currentNode.children.map((item, index) => {
+          this.state.currentNode.nodes.map((item, index) => {
             if(!item.isFolder) {
               return(<FileComponent key={index} item={item} />)
             }
@@ -62,8 +62,7 @@ class Explorer extends PureComponent {
     const { classes } = this.props;
     return (
       <div>
-      <Navbar />
-      <br/>
+        <br/>
       <Grid className={classes.root}>
         <Grid item xs={12}>
           <Grid container className={classes.gird} spacing={16}>

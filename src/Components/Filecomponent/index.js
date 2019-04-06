@@ -72,7 +72,7 @@ class  FileComponent extends PureComponent {
                 <Grid item xs={2} className="grid_content" style={{position:'relative'}}>
                     <Paper className={`${classes.paper} grid_content__paper`}>
                     <FileIcon extension={item.type} {...defaultStyles} />
-                        {item.name}
+                        {item.value}
                     </Paper>
                     { (visible || null) ?
                         <div className={classes.listRoot} style={{backgroundColor:'aliceBlue'}}> 

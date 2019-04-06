@@ -1,7 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -9,10 +7,9 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-// import * as actions from '../../actions/contentActions';
-// import * as CONSTANTS from '../../actions/constant';
 import Sidebar from '../Sidebar/index'
-//#249ccc
+
+//TODO: #249ccc change background color
 const styles = theme => ({
   root: {
     width: '100%',
@@ -78,27 +75,22 @@ class  Navbar extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      path: '',
+      currentNode: props.currentNode,
+      fileSystem: props.fileSystem
     }
-  }
-
-  // Function to be invoked when path gets updated
-  componentDidUpdate() {
-    this.setState({
-      path: ''
-    })
   }
 
   render() {
     const { classes } = this.props;
+    console.log(this.state);
     return (
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-          {/* <Sidebar contents={this.props.contents}/> */}
+          <Sidebar fileSystem={this.state.fileSystem}/>
             <img src="/upArrow.svg" alt="uparrow" style={{paddingLeft:'3%', paddingRight:'5px'}} /> 
             <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-              <span style={{paddingLeft:'5px', paddingRight:'5px'}}>{this.state.path}</span>
+              <span style={{paddingLeft:'5px', paddingRight:'5px'}}>{this.state.currentNode.path}</span>
             </Typography>
             <div className={classes.grow} />
             <div className={classes.search}>
@@ -124,19 +116,6 @@ Navbar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  state = state.contentReducer.toJS();
-  return {
-    contents: '',
-    path: '',
-  };
-};
 
-// const mapDispatchToProps = dispatch => {
-//   return bindActionCreators({
-//     ...actions
-//   }, dispatch);
-// };
-
-export default connect(mapStateToProps, null)(withStyles(styles)(Navbar));
+export default (withStyles(styles)(Navbar));
 

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import MuiTreeView from 'material-ui-treeview';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -21,6 +22,7 @@ class SideBar extends Component {
         super(props)
         this.state = {
           left: false,
+          fileSystem: props.fileSystem
         };
     }
 
@@ -33,45 +35,43 @@ class SideBar extends Component {
   render() {
     const { classes } = this.props;
 
-    const fullList = (
-      <div className={classes.fullList}>
-        <List>
-          {this.props.contents.map((item, index) => (
-            <ListItem button key={index}>
-              {
-                item.extension !== '' ?
-                  <ListItemText primary={item.file} />:
-                  <>
-                  <ListItemText primary={item.file} />
-                  <img src="./downArrow.svg" alt="downArrow" />
-                  </>
-              }
-            </ListItem>
-          ))}
-        </List>
-      </div>
-    );
+    // const fullList = (
+    //   <div className={classes.fullList}>
+    //     <List>
+    //       {this.state.fileSystem.map((item, index) => (
+    //         <ListItem button key={index}>
+    //           {
+    //             item.extension !== '' ?
+    //               <ListItemText primary={item.file} />:
+    //               <>
+    //               <ListItemText primary={item.file} />
+    //               <img src="./downArrow.svg" alt="downArrow" />
+    //               </>
+    //           }
+    //         </ListItem>
+    //       ))}
+    //     </List>
+    //   </div>
+    // );
 
     return (
         <div>
-        {/* <Button onClick={this.toggleDrawer('left', true)} variant="contained" color="secondary" className={classes.button}> */}
-            <img  onClick={this.toggleDrawer('left', true)} src="./hamburger.svg" alt="hamburger" style={{width:'22px', cursor:'pointer'}} />
-        {/* </Button> */}
-            <SwipeableDrawer
-            open={this.state.left}
-            onClose={this.toggleDrawer('left', false)}
-            onOpen={this.toggleDrawer('left', true)}
+          <img onClick={this.toggleDrawer('left', true)} src="./hamburger.svg" alt="hamburger" style={{width:'22px', cursor:'pointer'}} />
+          <SwipeableDrawer
+          open={this.state.left}
+          onClose={this.toggleDrawer('left', false)}
+          onOpen={this.toggleDrawer('left', true)}
+          >
+            <div
+                tabIndex={0}
+                role="button"
+                onClick={this.toggleDrawer('top', false)}
+                onKeyDown={this.toggleDrawer('top', false)}
             >
-                <div
-                    tabIndex={0}
-                    role="button"
-                    onClick={this.toggleDrawer('top', false)}
-                    onKeyDown={this.toggleDrawer('top', false)}
-                >
-                <p style={{paddingLeft:'5px'}}>Root Directory:</p>
-                    {fullList}
-                </div>
-            </SwipeableDrawer>
+            <p style={{paddingLeft:'5px'}}>Root Directory:</p>
+              <MuiTreeView tree={[this.state.fileSystem]} />
+            </div>
+          </SwipeableDrawer>
         </div>
     );
 }
