@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
-import FileIcon, { defaultStyles } from 'react-file-icon';
 
 // Material UI styles for paper cards
 const styles = theme => ({
@@ -19,23 +18,24 @@ const styles = theme => ({
         }
 });
 
-class  FileComponent extends PureComponent {
-
+class  FolderComponent extends PureComponent {
     render() {
         const { classes, item } = this.props;
         return (
-                <Grid item xs={2} className="grid_content">
-                    <Paper className={`${classes.paper} grid_content__paper`}>
-                    <FileIcon extension={item.extension} {...defaultStyles} />
-                        {item.file}
-                    </Paper>
-                </Grid>);
+            <Grid item xs={2} className="grid_content">
+                <Paper className={`${classes.paper} directory_folder grid_content__paper`}>
+                    <div className="directory_folder__image">
+                        <img src="https://img.icons8.com/nolan/64/000000/opened-folder.png" alt="Folder"/>
+                            {item.file}
+                    </div>
+                </Paper>
+            </Grid>);
     }
 }
 
-FileComponent.propTypes = {
+FolderComponent.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(FileComponent);
+export default withStyles(styles)(FolderComponent);
 
