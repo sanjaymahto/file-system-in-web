@@ -1,4 +1,4 @@
-import { getFiles } from './apis';
+import { getFiles, createFile, createFolder } from './apis';
 
 /**
  * function to restructure the schema for the fileSystem
@@ -44,6 +44,31 @@ export function getNodeInfo(node){
             .then((res)=>res.json())
             .then((res)=>setChildren(node,formatChildren(node,res.files)))
 }
+
+/**
+ * function to create file in server directory
+ * 
+ * @param  {Object} node - Current Node
+ */
+export function fileCreator(node, fileName){
+    return createFile({path: `${node.path}`,
+            fileName: fileName})
+            .then((res)=>res.json())
+            .then((data) => data);
+}
+
+/**
+ * function to create folder in server directory
+ * 
+ * @param  {Object} node - Current Node
+ */
+export function folderCreator(node, folderName){
+    return createFolder({path: `${node.path}`,
+                    folderName: folderName})
+            .then((res)=>res.json())
+            .then((data) => data);
+}
+
 
 /**
  * function to search the node and populate it with the child nodes

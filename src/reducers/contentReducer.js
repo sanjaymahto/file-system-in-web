@@ -59,7 +59,6 @@ function contentReducer(state = initialState, action) {
             return setFileSystem(state, payload);
         case CONSTANTS.SET_CURRENT_NODE:
             return setCurrentNode(state, payload);
-        case CONSTANTS.FILE_FETCH_FAILED:
         case CONSTANTS.FILE_FETCH_SUCCESS:
             return state.set('fetchFiles', false);
         case CONSTANTS.FILE_FETCH_INITIATED:

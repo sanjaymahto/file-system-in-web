@@ -62,7 +62,11 @@ class Home extends PureComponent {
                             updateCurrentNode={this.updateCurrentNode.bind(this)}
                             updateSearchNode={this.props.updateSearchFileSystem}
                             />
-                    <Explorer currentNode = {this.props.currentNode} updateCurrentNode={this.updateCurrentNode.bind(this)}/>
+                    <Explorer currentNode = {this.props.currentNode}
+                    fileSystem = {this.props.fileSystem} 
+                    updateCurrentNode={this.updateCurrentNode.bind(this)}
+                    updateDirectory={this.props.updateDirectory}
+                    />
                 </>
             )
         }
