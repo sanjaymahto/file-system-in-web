@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import MuiTreeView from 'material-ui-treeview';
-
+import './index.scss'
 
 class SideBar extends Component {
 
@@ -12,6 +12,12 @@ class SideBar extends Component {
         };
     }
 
+  /**
+   * function to toggle the sidebar from left side
+   * 
+   * @param  {Object} side
+   * @param  {Object} open
+   */
   toggleDrawer = (side, open) => () => {
     this.setState({
       [side]: open,
@@ -21,13 +27,14 @@ class SideBar extends Component {
   render() {
     return (
         <div>
-          <img onClick={this.toggleDrawer('left', true)} src="./hamburger.svg" alt="hamburger" style={{width:'22px', cursor:'pointer'}} />
+          <img className="hamburger_icon" onClick={this.toggleDrawer('left', true)} src="./hamburger.svg" alt="hamburger" />
           <SwipeableDrawer
           open={this.state.left}
           onClose={this.toggleDrawer('left', false)}
           onOpen={this.toggleDrawer('left', true)}
           >
             <div
+                className="directory_sidebar"
                 tabIndex={0}
                 role="button"
                 onClick={this.toggleDrawer('top', false)}

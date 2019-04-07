@@ -29,12 +29,27 @@ export function fileFetchFailed(){
 }
 
 export const updateSearchFileSystem = (fileSystem, currentNode) => dispatch =>{
-    console.log('Entered in to setcurrent node: ', currentNode);
     dispatch(setCurrentNode(currentNode));   
     dispatch(fileFetchCompleted());
         return {
             type:CONSTANTS.FILE_FETCH_INITIATED
         }
+}
+
+
+export const updateDirectory = (fileSystem, currentNode) => dispatch =>{
+    getNodeInfo(currentNode)
+        .then(res=>{
+            dispatch(setCurrentNode(res));
+            dispatch(setFileSystem(fileSystem,res));
+            dispatch(fileFetchCompleted());
+        })
+        .catch(e=>{
+            dispatch(fileFetchFailed());
+        });
+    return {
+        type:CONSTANTS.FILE_FETCH_INITIATED
+    }
 }
 
 export const fetchInfoAndUpDateFileSytem = (fileSystem,currentNode) => dispatch =>{

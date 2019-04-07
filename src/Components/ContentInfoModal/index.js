@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
+import FileIcon, { defaultStyles } from 'react-file-icon';
 
 function getModalStyle() {
   const top = 50;
@@ -25,21 +26,18 @@ const styles = theme => ({
   },
 });
 
-class InfoModal extends React.Component {
+class ContentInfoModal extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            open: false
+            open: true
         }
     }
 
-  handleOpen = () => {
-    this.setState({ open: true });
-  };
-
   handleClose = () => {
     this.setState({ open: false });
+    this.props.closeModal();
   };
 
   render() {
@@ -53,11 +51,22 @@ class InfoModal extends React.Component {
           onClose={this.handleClose}
         >
           <div style={getModalStyle()} className={classes.paper}>
-            <Typography variant="h6" id="modal-title">
-              Text in a modal
+            <Typography  className="modal_heading">
+              {this.props.currentNode.isFolder ? `Folder Info:`:
+              `File Info:`}
             </Typography>
-            <Typography variant="subtitle1" id="simple-modal-description">
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            {this.props.currentNode.type ?
+              <FileIcon size={60} extension={this.props.currentNode.type} {...defaultStyles} />:
+              <img  src="https://img.icons8.com/nolan/64/000000/opened-folder.png" alt="Folder"/>
+            }
+            <Typography  className="modal_heading">
+              Name: {this.props.currentNode.value}
+            </Typography>
+            <Typography  className="modal_heading">
+              Size: {`${this.props.currentNode.size} Kb`}
+            </Typography>
+            <Typography  className="modal_heading">
+              Created Date: {(this.props.currentNode.date).toLocaleString()}
             </Typography>
           </div>
         </Modal>
@@ -66,11 +75,11 @@ class InfoModal extends React.Component {
   }
 }
 
-InfoModal.propTypes = {
+ContentInfoModal.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
 // We need an intermediary variable for handling the recursive nesting.
-const SimpleModalWrapped = withStyles(styles)(InfoModal);
+const SimpleModalWrapped = withStyles(styles)(ContentInfoModal);
 
 export default SimpleModalWrapped;
