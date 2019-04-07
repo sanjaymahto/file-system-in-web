@@ -1,15 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Navbar from '../Navbar/index';
-import SkeletonLoader from './skeletonLoader';
 import FileComponent from '../Filecomponent/index';
 import FolderComponent from '../Foldercomponent/index';
-// import * as actions from '../../actions/contentActions';
 import './index.scss';
 
 
@@ -29,7 +24,6 @@ const styles = theme => ({
     color: theme.palette.text.secondary,
   }
 });
-
 
 class Explorer extends PureComponent {
 

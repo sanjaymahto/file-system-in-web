@@ -1,20 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import MuiTreeView from 'material-ui-treeview';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 
-const styles = {
-  list: {
-    width: 250,
-  },
-  fullList: {
-    width: 'auto',
-  },
-};
 
 class SideBar extends Component {
 
@@ -33,27 +21,6 @@ class SideBar extends Component {
   };
 
   render() {
-    const { classes } = this.props;
-
-    // const fullList = (
-    //   <div className={classes.fullList}>
-    //     <List>
-    //       {this.state.fileSystem.map((item, index) => (
-    //         <ListItem button key={index}>
-    //           {
-    //             item.extension !== '' ?
-    //               <ListItemText primary={item.file} />:
-    //               <>
-    //               <ListItemText primary={item.file} />
-    //               <img src="./downArrow.svg" alt="downArrow" />
-    //               </>
-    //           }
-    //         </ListItem>
-    //       ))}
-    //     </List>
-    //   </div>
-    // );
-
     return (
         <div>
           <img onClick={this.toggleDrawer('left', true)} src="./hamburger.svg" alt="hamburger" style={{width:'22px', cursor:'pointer'}} />
@@ -69,7 +36,7 @@ class SideBar extends Component {
                 onKeyDown={this.toggleDrawer('top', false)}
             >
             <p style={{paddingLeft:'5px'}}>Root Directory:</p>
-              <MuiTreeView tree={[this.state.fileSystem]} />
+              <MuiTreeView tree={[this.props.files]} />
             </div>
           </SwipeableDrawer>
         </div>
@@ -81,4 +48,4 @@ SideBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SideBar);
+export default (SideBar);

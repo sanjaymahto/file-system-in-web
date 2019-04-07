@@ -10,7 +10,6 @@ import { ROOT } from '../../utils/constants';
 
 
 
-
 class Home extends PureComponent {
 
     constructor(props) {
@@ -38,10 +37,9 @@ class Home extends PureComponent {
     }
 
     render() {
-        console.log(this.props)
         if(this.props.fetchFiles){
             this.getFiles();
-            return (<p></p>)
+            return (<></>)
         }
         else {
             return (
@@ -56,7 +54,8 @@ class Home extends PureComponent {
 }
 
     Home.propTypes = {
-    fileSystem: PropTypes.object.isRequired
+    fileSystem: PropTypes.object.isRequired,
+    currentNode: PropTypes.object.isRequired
     };
 
     const mapStateToProps = (state) => {

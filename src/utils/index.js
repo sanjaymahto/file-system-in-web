@@ -1,5 +1,5 @@
 import { getFiles } from './apis';
-import { ROOT } from './constants'
+// import { ROOT } from './constants'
 
 export function formatChildren(node,data = []){
     const children = data.map(datum => {
@@ -28,6 +28,21 @@ export function getNodeInfo(node){
             .then((res)=>setChildren(node,formatChildren(node,res.files)))
 }
 
-export function updateFileSystem(fileSystem, currentNode) {
-   return currentNode;
+function searchNode(fileSystem, currentNode){
+    if(fileSystem.path === currentNode.path){
+        fileSystem.nodes = currentNode.nodes;
+         return fileSystem;
+    }else if (fileSystem.path !== currentNode.path){
+         for(let i=0; i < fileSystem.nodes.length; i++){
+            searchNode(fileSystem.nodes[i], currentNode);
+         }
+         return fileSystem;
+    }
+    return null;
+}
+
+
+
+export function updateFileSystem(fileSystem, currentNode) {    
+        return searchNode(fileSystem, currentNode);
 }

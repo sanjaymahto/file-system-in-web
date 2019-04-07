@@ -86,7 +86,7 @@ class  Navbar extends PureComponent {
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-          <Sidebar fileSystem={this.props.fileSystem}/>
+          <Sidebar files={this.props.fileSystem}/>
             <img src="/upArrow.svg" alt="uparrow" style={{paddingLeft:'3%', paddingRight:'5px'}} /> 
             <Typography className={classes.title} variant="h6" color="inherit" noWrap>
               <span style={{paddingLeft:'5px', paddingRight:'5px'}}>{this.props.currentNode.path}</span>
