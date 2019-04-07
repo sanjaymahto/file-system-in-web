@@ -1,29 +1,44 @@
 import { fromJS } from 'immutable';
-import * as CONSTANTS from '../actions/constant';
+import * as CONSTANTS from './constants';
 
 const initialState = fromJS({
     // directory contents (i.e files and folders)
-    contents: [],
-    // metadata of the file or folder selected
-    metaData: {},
-    // Searched file in a directory
-    searchedFile: '',
-    // Path of the current Directory
-    path: CONSTANTS.ROOT,
-    // dummy folder for file System
-    root: CONSTANTS.ROOT,
-    // Error while fetching contents
-    error: ''
+    fileSystem: {
+        value : `${CONSTANTS.ROOT}`,
+        type : '',
+        isFolder :false,
+        size: 0,
+        date: null,
+        nodes: [],
+        path:`/${CONSTANTS.ROOT}`,
+        parentPath:''
+    },
+    //current node for explorer
+    currentNode: null,
+    //fetch status
+    fetchFiles : true,
 });
 
+
 /**
- * function to log error while fetching contents from API 
+ * function to set file System into reducer
+ * 
+ * @param  {Object} state - state Object
+ * @param  {Object} payload - payload Object
+ */
+function setFileSystem(state, payload) {
+    return state.set('fileSystem', (payload));
+}
+
+
+/**
+ * function to set current node into the reducer
  * 
  * @param  {Object} state - state Object
  * @param  {Object} payload - Payload Object
  */
-function logError(state, payload) {
-    return state.set('error', payload)
+function setCurrentNode(state, payload) {
+    return state.set('currentNode', (payload));
 }
 
 
@@ -40,11 +55,15 @@ function logError(state, payload) {
 function contentReducer(state = initialState, action) {
     const { type, payload } = action;
         switch (type) {
-        case CONSTANTS.GET_ROOT_FILES:
-            return state.set('contents', fromJS(payload.files))
-                        .set('path', payload.path)
-        case CONSTANTS.ERROR:
-            return logError(state, payload);
+        case CONSTANTS.SET_FILE_SYSTEM:
+            return setFileSystem(state, payload);
+        case CONSTANTS.SET_CURRENT_NODE:
+            return setCurrentNode(state, payload);
+        case CONSTANTS.FILE_FETCH_FAILED:
+        case CONSTANTS.FILE_FETCH_SUCCESS:
+            return state.set('fetchFiles', false);
+        case CONSTANTS.FILE_FETCH_INITIATED:
+            return state.set('fetchFiles', true);
         default:
             return state;
     }

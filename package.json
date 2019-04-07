@@ -5,11 +5,10 @@
   "dependencies": {
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
-    "axios": "^0.18.0",
     "immutable": "^4.0.0-rc.12",
+    "material-ui-treeview": "^3.2.0",
     "node-sass": "^4.11.0",
     "react": "^16.8.6",
-    "react-collapsible-component": "^1.1.2",
     "react-dom": "^16.8.6",
     "react-file-icon": "^0.2.0",
     "react-radio-buttons": "^1.2.2",

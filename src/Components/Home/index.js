@@ -2,120 +2,80 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import Explorer from '../Explorer/index';
 import Navbar from '../Navbar/index';
-import SkeletonLoader from './skeletonLoader';
-import FileComponent from '../Filecomponent/index';
-import FolderComponent from '../Foldercomponent/index';
-import * as actions from '../../actions/contentActions';
+import * as actions from './actions';
 import './index.scss';
+import { ROOT } from '../../reducers/constants';
 
-
-// Material UI styles for paper cards
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    height: 100,
-    width: 80,
-    padding: theme.spacing.unit * 2,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }
-});
 
 
 class Home extends PureComponent {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      contents: null,
-    };
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            fileSystem : props.fileSystem,
+            currentNode : props.currentNode,
+            fetchFiles : props.fetchFiles,
+        };
+    }
+
+    static getDerivedStateFromProps(props, state){
+        if(!state.currentNode && props.fileSystem.value === ROOT){
+            return { currentNode : props.fileSystem}
+        }
+        return null;
+    }
+
+    getFiles(){
+        this.props.fetchInfoAndUpDateFileSytem(this.state.fileSystem,this.state.currentNode)
+    }
+
+    updateCurrentNode(node){
+        this.props.fetchInfoAndUpDateFileSytem(this.props.fileSystem,node)
+    }
 
 
-  // Function to be called before mounting of the component
-  componentWillMount() {
-    this.props.getDirectoryContents();
-  }
-
-  // Function to be called when the props will get Updated
-  componentDidUpdate() {
-    this.setState({
-      contents: this.props.contents
-    }, () => {
-      this.getContents()
-    })
-  }
-
-  /**
-   * Function to list all the files and folders in a particular directory
-   * 
-   * @param  {object} props - Style props
-   */
-  getContents = () => {
-    const { contents } = this.state
-    if(!contents){
-      return (<SkeletonLoader />); // Load the skeleton files and folders while props are updated
-    } else {
-      return (
-          contents.map((item) => {
-            if(item.extension !== "") {
-              return(<FileComponent item={item} />)
-            }
-              return (<FolderComponent item={item} />);
-        })
-      )
-  }
-  }
-
-  render() {
-    const { classes } = this.props;
-    return (
-      <div>
-      <Navbar />
-      <br/>
-      <Grid className={classes.root}>
-        <Grid item xs={12}>
-          <Grid container className={classes.demo} spacing={16}>
-              {this.getContents()}
-            <Grid item xs={2} className="grid_content">
-              <Paper className={`${classes.paper} directory_folder grid_content__paper`}>
-                <div className="directory_folder__image">
-                  <img src={window.location.origin + '/addFileOrFolder.svg'} alt="addFileOrFolder"/>
-                </div>
-              </Paper>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-      </div>
-    );
-  }
+    render() {
+        if(this.props.fetchFiles){
+            // TODO: to put a loader while fetching files...
+            this.getFiles();
+            return (<></>)
+        }
+        else {
+            return (
+                <>
+                    <Navbar fileSystem = {this.props.fileSystem}
+                            currentNode = {this.props.currentNode}
+                            updateCurrentNode={this.updateCurrentNode.bind(this)}
+                            updateSearchNode={this.props.updateSearchFileSystem}
+                            />
+                    <Explorer currentNode = {this.props.currentNode} updateCurrentNode={this.updateCurrentNode.bind(this)}/>
+                </>
+            )
+        }
+    }
 }
 
-Home.propTypes = {
-  classes: PropTypes.object.isRequired,
-  contents: PropTypes.array.isRequired,
-  metaData: PropTypes.object.isRequired
-};
+    Home.propTypes = {
+    fileSystem: PropTypes.object,
+    currentNode: PropTypes.object
+    };
 
-const mapStateToProps = (state) => {
-  state = state.contentReducer.toJS();
-  return {
-    contents: state.contents,
-    metaData: state.metaData,
-  };
-};
+    const mapStateToProps = (state) => {
+    state = state.contentReducer.toJS();
+    return {
+        fileSystem: state.fileSystem,
+        currentNode: state.currentNode,
+        fetchFiles:state.fetchFiles
+    };
+    };
 
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({
-    ...actions
-  }, dispatch);
-};
+    const mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+        ...actions
+    }, dispatch);
+    };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Home));
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

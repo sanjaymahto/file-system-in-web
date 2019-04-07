@@ -1,7 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -9,8 +7,7 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import * as actions from '../../actions/contentActions';
-import * as CONSTANTS from '../../actions/constant';
+import { searchNode } from '../../utils/index';
 import Sidebar from '../Sidebar/index'
 
 const styles = theme => ({
@@ -78,15 +75,45 @@ class  Navbar extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      path: CONSTANTS.ROOT,
+      query: '',
+      currentNode: props.currentNode,
+      fileSystem: props.fileSystem
     }
   }
 
-  // Function to be invoked when path gets updated
-  componentDidUpdate() {
+
+  updatePath(currentNode) {
+    const {parentPath} = currentNode
+    if(parentPath) {
+      this.props.updateCurrentNode(searchNode(this.props.fileSystem, parentPath));
+    }
+  }
+
+  setQuery(event){
     this.setState({
-      path: this.props.path
+      query: event.target.value
     })
+  }
+
+
+  updateCurrentSearch = () => {
+    let node = [];
+    let searchContent = this.state.query;
+    let currentNode = this.props.currentNode;
+    let curNode = this.props.currentNode.nodes;
+    for(let i=0; i<curNode.length;i++){ 
+      if(curNode[i].value === searchContent){
+            node.push(curNode[i])
+            break;
+      }
+    }
+    if(!node.length){
+      this.props.updateCurrentNode(searchNode(this.props.fileSystem, this.props.currentNode.path));
+    } else {
+    currentNode.nodes = node
+    this.props.updateSearchNode(this.props.fileSystem,currentNode);
+    }
+    
   }
 
   render() {
@@ -95,24 +122,30 @@ class  Navbar extends PureComponent {
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-          <Sidebar contents={this.props.contents}/>
-            <img src="/upArrow.svg" alt="uparrow" style={{paddingLeft:'3%', paddingRight:'5px'}} /> 
-            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-              <span style={{paddingLeft:'5px', paddingRight:'5px'}}>{this.state.path}</span>
-            </Typography>
-            <div className={classes.grow} />
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-              />
-            </div>
+            <Sidebar files={this.props.fileSystem} rootPath={this.props.fileSystem.path}/>
+              <img src="/upArrow.svg" alt="uparrow" onClick={this.updatePath.bind(this, this.props.currentNode)} style={{paddingLeft:'3%', paddingRight:'5px', cursor:'pointer'}} /> 
+              <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+                <span style={{paddingLeft:'5px', paddingRight:'5px'}}>{this.props.currentNode.path}</span>
+              </Typography>
+              <div className={classes.grow} />
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <SearchIcon />
+                  </div>
+                <InputBase
+                  onChange={this.setQuery.bind(this)}
+                  onKeyPress={event => {
+                      if (event.key === 'Enter') {
+                          this.updateCurrentSearch()
+                      }
+                  }}
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                />
+                </div>
           </Toolbar>
         </AppBar>
       </div>
@@ -124,19 +157,6 @@ Navbar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  state = state.contentReducer.toJS();
-  return {
-    contents: state.contents,
-    path: state.path,
-  };
-};
 
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({
-    ...actions
-  }, dispatch);
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Navbar));
+export default (withStyles(styles)(Navbar));
 
