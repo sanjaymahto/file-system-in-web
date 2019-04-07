@@ -1,2 +1,6 @@
 export const ROOT = 'dummy'
 export const SET_FILE_SYSTEM = 'SET_FILE_SYSTEM';
+export const SET_CURRENT_NODE = 'SET_CURRENT_NODE';
+export const FILE_FETCH_SUCCESS = 'FILE_FETCH_SUCCESS';
+export const FILE_FETCH_INITIATED = 'FILE_FETCH_INITIATED';
+export const FILE_FETCH_FAILED = 'FILE_FETCH_FAILED';

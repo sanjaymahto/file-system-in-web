@@ -22,7 +22,7 @@ class  FolderComponent extends PureComponent {
     render() {
         const { classes, item } = this.props;
         return (
-            <Grid item xs={2} className="grid_content">
+            <Grid item xs={2} className="grid_content" onClick={()=>this.props.updateClickEvent(item)}>
                 <Paper className={`${classes.paper} directory_folder grid_content__paper`}>
                     <div className="directory_folder__image">
                         <img src="https://img.icons8.com/nolan/64/000000/opened-folder.png" alt="Folder"/>

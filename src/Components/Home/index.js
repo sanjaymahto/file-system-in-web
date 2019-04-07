@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Explorer from '../Explorer/index';
-import SideBar from '../Sidebar/index';
 import Navbar from '../Navbar/index';
 import * as actions from './actions';
-import { getNodeInfo ,getRootFileInfo ,updateFileSystem} from '../../utils'
 import './index.scss';
+import { ROOT } from '../../utils/constants';
 
 
 
@@ -17,44 +16,39 @@ class Home extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            fileSystem : null,
-            currentNode : null,
-            fetchFiles : false
+            fileSystem : props.fileSystem,
+            currentNode : props.currentNode,
+            fetchFiles : props.fetchFiles,
         };
     }
 
     static getDerivedStateFromProps(props, state){
-        if(!(state.fileSystem && state.currentNode)){
-            return { fetchFiles : true }
+        if(!state.currentNode && props.fileSystem.value === ROOT){
+            return { currentNode : props.fileSystem}
         }
         return null;
     }
 
-    getRootFiles(){
-        const root = getRootFileInfo();
-        getNodeInfo(root,'').then(res=>{
-            this.props.setFileSystem(updateFileSystem(null,res));
-            this.setState({
-                currentNode : res,
-                fileSystem: { ...root, ...res},
-                fetchFiles: false
-            });
-        });
-        
+    getFiles(){
+        this.props.fetchInfoAndUpDateFileSytem(this.state.fileSystem,this.state.currentNode)
+    }
+
+    updateCurrentNode(node){
+        this.props.fetchInfoAndUpDateFileSytem(this.state.fileSystem,node)
     }
 
     render() {
-        if(this.state.fetchFiles){
-            //show-loader
-            this.getRootFiles();
-            return (<></>)
+        console.log(this.props)
+        if(this.props.fetchFiles){
+            this.getFiles();
+            return (<p></p>)
         }
         else {
             return (
                 <>
-                    <Navbar fileSystem = {this.state.fileSystem}
-                            currentNode = {this.state.currentNode} />
-                    <Explorer currentNode = {this.state.currentNode}/>
+                    <Navbar fileSystem = {this.props.fileSystem}
+                            currentNode = {this.props.currentNode} />
+                    <Explorer currentNode = {this.props.currentNode} updateCurrentNode={this.updateCurrentNode.bind(this)}/>
                 </>
             )
         }
@@ -68,7 +62,9 @@ class Home extends PureComponent {
     const mapStateToProps = (state) => {
     state = state.contentReducer.toJS();
     return {
-        fileSystem: state.fileSystem
+        fileSystem: state.fileSystem,
+        currentNode: state.currentNode,
+        fetchFiles:state.fetchFiles
     };
     };
 

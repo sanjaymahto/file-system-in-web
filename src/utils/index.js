@@ -1,7 +1,7 @@
 import { getFiles } from './apis';
 import { ROOT } from './constants'
 
-export function formatChildren(parent,data = []){
+export function formatChildren(node,data = []){
     const children = data.map(datum => {
         return {
             value : datum.file,
@@ -10,40 +10,24 @@ export function formatChildren(parent,data = []){
             size: datum.size || 0,
             date: datum.date || new Date(),
             nodes: [],
-            path:`${parent.path}/${datum.file}`
+            path:`${node.parentPath}/${node.value}/${datum.file}`,
+            parentPath:`${node.parentPath}/${node.value}`
         }
     });
     return children
 }
 
-function setChildren(parent,children){
-    parent['nodes'] = children;
-
-    return  parent;
+function setChildren(node,children){
+    node['nodes'] = children;
+    return  node;
 }
 
-export function getNodeInfo(parent,path){
-    return getFiles(`${parent.path}${path}`)
+export function getNodeInfo(node){
+    return getFiles(`${node.parentPath}/${node.value}`)
             .then((res)=>res.json())
-            .then((res)=>setChildren(parent,formatChildren(parent,res.files)))
-}
-
-export function getRootFileInfo(){
-    return {
-        value : '/',
-        type : '',
-        isFolder : true,
-        size: 0,
-        date: new Date(),
-        nodes: [],
-        path:`/${ROOT}`
-    }
+            .then((res)=>setChildren(node,formatChildren(node,res.files)))
 }
 
 export function updateFileSystem(fileSystem, currentNode) {
-    if(!fileSystem) {
-        return currentNode;
-    } else {
-        //TODO search the file nodes and update it's children
-    }
+   return currentNode;
 }

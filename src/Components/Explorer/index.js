@@ -35,9 +35,9 @@ class Explorer extends PureComponent {
 
   constructor(props) {
     super(props);
-    console.log(props)
     this.state = {
       currentNode: props.currentNode,
+
     };
   }
 
@@ -49,11 +49,12 @@ class Explorer extends PureComponent {
    */
   getContents = () => {
       return (
-          this.state.currentNode.nodes.map((item, index) => {
+          this.props.currentNode.nodes.map((item, index) => {
             if(!item.isFolder) {
               return(<FileComponent key={index} item={item} />)
             }
-              return (<FolderComponent key={index} item={item} />);
+              return (<FolderComponent key={index} item={item} 
+                      updateClickEvent={this.props.updateCurrentNode} />);
         })
       )
   }
