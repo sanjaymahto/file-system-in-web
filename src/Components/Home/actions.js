@@ -29,7 +29,15 @@ export function fileFetchFailed(){
 }
 
 export const fetchInfoAndUpDateFileSytem = (fileSystem,currentNode) => dispatch =>{
-    searchNode(fileSystem, currentNode.path)
+    let searchRes = searchNode(fileSystem, currentNode.path);
+    if(searchRes.nodes.length > 0){
+        dispatch(setCurrentNode(searchRes));
+        dispatch(setFileSystem(fileSystem,searchRes));
+        dispatch(fileFetchCompleted());
+        return {
+            type:CONSTANTS.FILE_FETCH_INITIATED
+        }
+    }
     getNodeInfo(currentNode)
         .then(res=>{
             dispatch(setCurrentNode(res));
