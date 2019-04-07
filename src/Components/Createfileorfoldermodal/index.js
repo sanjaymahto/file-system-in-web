@@ -9,7 +9,7 @@ import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import * as actions from './action';
-import './index.scss'
+import './index.scss';
 
 // material UI styles for modal
 function getModalStyle() {
@@ -63,6 +63,7 @@ class InfoModal extends React.Component {
         }
     }
 
+
     handleClose = () => {
         this.props.closeModal();
         this.setState({ open: false });
@@ -77,7 +78,6 @@ class InfoModal extends React.Component {
     handleChange = name => event => {
         this.setState({ [name]: event.target.value });
     };
-
     
     /**
      * function to create new file or folder in filesystem
@@ -91,6 +91,7 @@ class InfoModal extends React.Component {
         } else {
             this.props.createFolder(this.props.currentNode, this.state.name);
         }
+        this.props.resetCreateFlag();
         this.props.updateDirectory(this.props.fileSystem,this.props.currentNode);
         this.handleClose()
     }
@@ -146,15 +147,24 @@ class InfoModal extends React.Component {
     }
 
     InfoModal.propTypes = {
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.object,
+    createFlag: PropTypes.bool
     };
 
+
+
+    const mapStateToProps = (state) => {
+        state = state.contentReducer.toJS();
+        return {
+            createFlag: state.createFlag
+        };
+    };
 
     const mapDispatchToProps = dispatch => {
         return bindActionCreators({
             ...actions
         }, dispatch);
-        };
+    };
     
-export default connect(null, mapDispatchToProps)(withStyles(styles)(InfoModal));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(InfoModal));
     
