@@ -93,7 +93,6 @@ export function folderDelete(node, folderName){
             .then((data) => data);
 }
 
-
 /**
  * function to search the node and populate it with the child nodes
  * 
@@ -135,7 +134,6 @@ export function searchNode(fileSystem, parentPath) {
     }
     return null;
 }
-
 
 /**
  * function to update file system 

@@ -35,6 +35,11 @@ class ContentInfoModal extends React.Component {
         }
     }
 
+
+  /**
+   * function to close modal
+   * 
+   */
   handleClose = () => {
     this.setState({ open: false });
     this.props.closeModal();
@@ -45,16 +50,15 @@ class ContentInfoModal extends React.Component {
     return (
       <div>
         <Modal
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-          open={this.state.open}
-          onClose={this.handleClose}
-        >
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+            open={this.state.open}
+            onClose={this.handleClose}>
           <div style={getModalStyle()} className={classes.paper}>
-            <Typography  className="modal_heading">
-              {this.props.currentNode.isFolder ? `Folder Info:`:
-              `File Info:`}
-            </Typography>
+              <Typography  className="modal_heading">
+                {this.props.currentNode.isFolder ? `Folder Info:`:
+                `File Info:`}
+              </Typography>
             {this.props.currentNode.type ?
               <FileIcon size={60} extension={this.props.currentNode.type} {...defaultStyles} />:
               <img  src="https://img.icons8.com/nolan/64/000000/opened-folder.png" alt="Folder"/>

@@ -18,7 +18,10 @@ class  ContextMenu extends PureComponent {
 
     }
 
-
+    /**
+     * function to be called when component props gets updated
+     * 
+     */
     componentDidUpdate(){
         if(this.props.deleteFlag) {
             this.props.updateDirectory(this.props.fileSystem,this.props.currentNode)
@@ -26,6 +29,11 @@ class  ContextMenu extends PureComponent {
         }
     }
 
+    /**
+     * function to open directory folder or open modal for file info
+     * 
+     * @param  {Object} event - event
+     */
     openDirectoryEvent(event){
         let content;
         if(event.event.target.innerText) {
@@ -46,6 +54,11 @@ class  ContextMenu extends PureComponent {
         }
     }
 
+    /**
+     * function to open open modal for file/folder info
+     * 
+     * @param  {Object} event - event
+     */
     getInfoModalEvent(event){
         let content;
         if(event.event.target.innerText) {
@@ -65,6 +78,11 @@ class  ContextMenu extends PureComponent {
         }
     }
 
+    /**
+     * function to delete file/folder from file system
+     * 
+     * @param  {Object} event - event
+     */
     deleteEvent(event){
         let content;
         if(event.event.target.innerText) {
@@ -81,6 +99,9 @@ class  ContextMenu extends PureComponent {
         }
     }
 
+    /**
+     * function to close opened modal
+     */
     closeModal = () => {
         this.setState({
             showModal: false
@@ -99,10 +120,9 @@ class  ContextMenu extends PureComponent {
             </Menu>
             {this.state.showModal?
             <ContentInfoModal
-            currentNode={this.state.currentNode}
-            name={this.state.content}
-            closeModal={this.closeModal}
-            />:
+                currentNode={this.state.currentNode}
+                name={this.state.content}
+                closeModal={this.closeModal}/>:
             null}
             </div>);
     }

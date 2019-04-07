@@ -1,6 +1,7 @@
 import { fromJS } from 'immutable';
 import * as CONSTANTS from './constants';
 
+// Initializing Immutable state Store
 const initialState = fromJS({
     // directory contents (i.e files and folders)
     fileSystem: {
@@ -18,7 +19,9 @@ const initialState = fromJS({
     //fetch status
     fetchFiles : true,
     // delete flag
-    deleteFlag: false
+    deleteFlag: false,
+    // create flag
+    createFlag: false
 });
 
 
@@ -31,7 +34,6 @@ const initialState = fromJS({
 function setFileSystem(state, payload) {
     return state.set('fileSystem', (payload));
 }
-
 
 /**
  * function to set current node into the reducer
@@ -52,6 +54,19 @@ function setCurrentNode(state, payload) {
 function setDeleteFlag(state, payload) {
     if(payload.status === 200){
         return state.set('deleteFlag', true)
+    }
+    return state
+}
+
+/**
+ * function to set create flag into the reducer
+ * 
+ * @param  {Object} state - state Object
+ * @param  {Object} payload - Payload Object
+ */
+function setCreateFlag(state, payload) {
+    if(payload.status === 200){
+        return state.set('createFlag', true)
     }
     return state
 }
@@ -78,6 +93,12 @@ function contentReducer(state = initialState, action) {
             return state.set('fetchFiles', false);
         case CONSTANTS.FILE_FETCH_INITIATED:
             return state.set('fetchFiles', true);
+        case CONSTANTS.CREATE_A_FILE:
+            return setCreateFlag(state, payload);
+        case CONSTANTS.CREATE_A_FOLDER:
+            return setCreateFlag(state, payload);
+        case CONSTANTS.RESET_CREATE_FLAG:
+            return state.set('createFlag', false);
         case CONSTANTS.DELETE_A_FILE:
             return setDeleteFlag(state, payload);
         case CONSTANTS.DELETE_A_FOLDER:

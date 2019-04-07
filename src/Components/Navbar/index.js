@@ -11,7 +11,7 @@ import { searchNode } from '../../utils/index';
 import Sidebar from '../Sidebar/index'
 import './index.scss'
 
-// Material UI styles
+// Material UI styles for sideBar
 const styles = theme => ({
   root: {
     width: '100%',
@@ -144,9 +144,7 @@ class  Navbar extends PureComponent {
                   <div className={classes.searchIcon}>
                     <SearchIcon />
                   </div>
-                <InputBase
-                  onChange={this.setQuery.bind(this)}
-                  onKeyPress={event => {
+                <InputBase onChange={this.setQuery.bind(this)} onKeyPress={event => {
                       if (event.key === 'Enter') {
                           this.updateCurrentSearch()
                       }
