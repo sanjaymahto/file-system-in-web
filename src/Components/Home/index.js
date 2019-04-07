@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Loader from 'react-loader-spinner'
 import Explorer from '../Explorer/index';
 import Navbar from '../Navbar/index';
 import * as actions from './actions';
@@ -28,20 +29,30 @@ class Home extends PureComponent {
         return null;
     }
 
+    /**
+     * function to get initial files from server
+     * 
+     */
     getFiles(){
         this.props.fetchInfoAndUpDateFileSytem(this.state.fileSystem,this.state.currentNode)
     }
 
+    /**
+     * Funtion to update the current node (i.e the directory in the explorer field)
+     * 
+     * @param  {Object} node - Current Node
+     */
     updateCurrentNode(node){
         this.props.fetchInfoAndUpDateFileSytem(this.props.fileSystem,node)
     }
 
-
     render() {
         if(this.props.fetchFiles){
-            // TODO: to put a loader while fetching files...
             this.getFiles();
-            return (<></>)
+            return (
+                <div className="explorer_loader">
+                    <Loader className="explorer_loader__barloader" type="Bars" color="#000" height={50} width={80} />
+                </div>)
         }
         else {
             return (

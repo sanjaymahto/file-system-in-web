@@ -60,7 +60,6 @@ class  FileComponent extends PureComponent {
     _handleClick = (event) => {
         const { visible } = this.state;
         const wasOutside = !(event.target.contains === this.root);
-        
         if (wasOutside && visible) this.setState({ visible: false });
     };
 

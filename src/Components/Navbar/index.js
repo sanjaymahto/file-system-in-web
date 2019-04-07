@@ -9,7 +9,9 @@ import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import { searchNode } from '../../utils/index';
 import Sidebar from '../Sidebar/index'
+import './index.scss'
 
+// Material UI styles
 const styles = theme => ({
   root: {
     width: '100%',
@@ -76,12 +78,14 @@ class  Navbar extends PureComponent {
     super(props);
     this.state = {
       query: '',
-      currentNode: props.currentNode,
-      fileSystem: props.fileSystem
     }
   }
 
-
+  /**
+   * function to update the current directory path
+   * 
+   * @param  {Object} currentNode - current Node
+   */
   updatePath(currentNode) {
     const {parentPath} = currentNode
     if(parentPath) {
@@ -89,13 +93,21 @@ class  Navbar extends PureComponent {
     }
   }
 
+  /**
+   * function to set search query in search Bar.
+   * 
+   * @param  {Object} event - event Object
+   */
   setQuery(event){
     this.setState({
       query: event.target.value
     })
   }
 
-
+  /**
+   * function to update the current directory according to search value
+   * 
+   */
   updateCurrentSearch = () => {
     let node = [];
     let searchContent = this.state.query;
@@ -123,7 +135,7 @@ class  Navbar extends PureComponent {
         <AppBar position="static">
           <Toolbar>
             <Sidebar files={this.props.fileSystem} rootPath={this.props.fileSystem.path}/>
-              <img src="/upArrow.svg" alt="uparrow" onClick={this.updatePath.bind(this, this.props.currentNode)} style={{paddingLeft:'3%', paddingRight:'5px', cursor:'pointer'}} /> 
+              <img src="/upArrow.svg" alt="uparrow"  className="back_arrow" onClick={this.updatePath.bind(this, this.props.currentNode)} /> 
               <Typography className={classes.title} variant="h6" color="inherit" noWrap>
                 <span style={{paddingLeft:'5px', paddingRight:'5px'}}>{this.props.currentNode.path}</span>
               </Typography>
