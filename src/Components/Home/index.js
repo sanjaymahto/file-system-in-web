@@ -6,7 +6,7 @@ import Explorer from '../Explorer/index';
 import Navbar from '../Navbar/index';
 import * as actions from './actions';
 import './index.scss';
-import { ROOT } from '../../utils/constants';
+import { ROOT } from '../../reducers/constants';
 
 
 
@@ -33,11 +33,12 @@ class Home extends PureComponent {
     }
 
     updateCurrentNode(node){
-        this.props.fetchInfoAndUpDateFileSytem(this.state.fileSystem,node)
+        this.props.fetchInfoAndUpDateFileSytem(this.props.fileSystem,node)
     }
 
     render() {
         if(this.props.fetchFiles){
+            // TODO: to put a loader while fetching files...
             this.getFiles();
             return (<></>)
         }
@@ -45,7 +46,8 @@ class Home extends PureComponent {
             return (
                 <>
                     <Navbar fileSystem = {this.props.fileSystem}
-                            currentNode = {this.props.currentNode} />
+                            currentNode = {this.props.currentNode}
+                            updateCurrentNode={this.updateCurrentNode.bind(this)} />
                     <Explorer currentNode = {this.props.currentNode} updateCurrentNode={this.updateCurrentNode.bind(this)}/>
                 </>
             )
@@ -54,8 +56,8 @@ class Home extends PureComponent {
 }
 
     Home.propTypes = {
-    fileSystem: PropTypes.object.isRequired,
-    currentNode: PropTypes.object.isRequired
+    fileSystem: PropTypes.object,
+    currentNode: PropTypes.object
     };
 
     const mapStateToProps = (state) => {

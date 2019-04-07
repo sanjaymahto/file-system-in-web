@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import MuiTreeView from 'material-ui-treeview';
 
@@ -10,7 +9,6 @@ class SideBar extends Component {
         super(props)
         this.state = {
           left: false,
-          fileSystem: props.fileSystem
         };
     }
 
@@ -35,7 +33,7 @@ class SideBar extends Component {
                 onClick={this.toggleDrawer('top', false)}
                 onKeyDown={this.toggleDrawer('top', false)}
             >
-            <p style={{paddingLeft:'5px'}}>Root Directory:</p>
+            <p style={{paddingLeft:'5px'}}>{this.props.rootPath}</p>
               <MuiTreeView tree={[this.props.files]} />
             </div>
           </SwipeableDrawer>
@@ -44,8 +42,5 @@ class SideBar extends Component {
 }
 }
 
-SideBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default (SideBar);

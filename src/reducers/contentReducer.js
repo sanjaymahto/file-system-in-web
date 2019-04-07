@@ -19,10 +19,24 @@ const initialState = fromJS({
     fetchFiles : true,
 });
 
+
+/**
+ * function to set file System into reducer
+ * 
+ * @param  {Object} state - state Object
+ * @param  {Object} payload - payload Object
+ */
 function setFileSystem(state, payload) {
     return state.set('fileSystem', (payload));
 }
 
+
+/**
+ * function to set current node into the reducer
+ * 
+ * @param  {Object} state - state Object
+ * @param  {Object} payload - Payload Object
+ */
 function setCurrentNode(state, payload) {
     return state.set('currentNode', (payload));
 }

@@ -1,5 +1,5 @@
-import * as CONSTANTS from './constants';
-import { getNodeInfo ,updateFileSystem} from '../../utils'
+import * as CONSTANTS from '../../reducers/constants';
+import { getNodeInfo ,updateFileSystem, searchNode} from '../../utils'
 
 export function setFileSystem(fileSystem,res) {
     const payload = updateFileSystem(fileSystem,res)
@@ -29,9 +29,9 @@ export function fileFetchFailed(){
 }
 
 export const fetchInfoAndUpDateFileSytem = (fileSystem,currentNode) => dispatch =>{
+    searchNode(fileSystem, currentNode.path)
     getNodeInfo(currentNode)
         .then(res=>{
-    
             dispatch(setCurrentNode(res));
             dispatch(setFileSystem(fileSystem,res));
             dispatch(fileFetchCompleted());

@@ -7,9 +7,9 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
+import { searchNode } from '../../utils/index';
 import Sidebar from '../Sidebar/index'
 
-//TODO: #249ccc change background color
 const styles = theme => ({
   root: {
     width: '100%',
@@ -80,30 +80,39 @@ class  Navbar extends PureComponent {
     }
   }
 
+
+  updatePath(currentNode) {
+    const {parentPath} = currentNode
+    if(parentPath) {
+      this.props.updateCurrentNode(searchNode(this.props.fileSystem, parentPath));
+    }
+  }
+
+
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-          <Sidebar files={this.props.fileSystem}/>
-            <img src="/upArrow.svg" alt="uparrow" style={{paddingLeft:'3%', paddingRight:'5px'}} /> 
-            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-              <span style={{paddingLeft:'5px', paddingRight:'5px'}}>{this.props.currentNode.path}</span>
-            </Typography>
-            <div className={classes.grow} />
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-              />
-            </div>
+            <Sidebar files={this.props.fileSystem} rootPath={this.props.fileSystem.path}/>
+              <img src="/upArrow.svg" alt="uparrow" onClick={this.updatePath.bind(this, this.props.currentNode)} style={{paddingLeft:'3%', paddingRight:'5px', cursor:'pointer'}} /> 
+              <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+                <span style={{paddingLeft:'5px', paddingRight:'5px'}}>{this.props.currentNode.path}</span>
+              </Typography>
+              <div className={classes.grow} />
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <SearchIcon />
+                  </div>
+                <InputBase
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                />
+                </div>
           </Toolbar>
         </AppBar>
       </div>

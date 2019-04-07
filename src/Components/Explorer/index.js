@@ -79,8 +79,6 @@ class Explorer extends PureComponent {
 
 Explorer.propTypes = {
   classes: PropTypes.object.isRequired,
-  contents: PropTypes.array.isRequired,
-  metaData: PropTypes.object.isRequired
 };
 
 
