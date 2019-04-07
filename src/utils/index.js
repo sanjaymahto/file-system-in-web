@@ -1,4 +1,4 @@
-import { getFiles, createFile, createFolder } from './apis';
+import { getFiles, createFile, createFolder, deleteFile, deleteFolder } from './apis';
 
 /**
  * function to restructure the schema for the fileSystem
@@ -14,7 +14,7 @@ export function formatChildren(node,data = []){
             type : datum.type,
             isFolder : !datum.type,
             size: datum.size || 0,
-            date: datum.date || new Date(),
+            date: datum.date || new Date().toLocaleString(),
             nodes: [],
             path:`${node.parentPath}/${node.value}/${datum.file}`,
             parentPath:`${node.parentPath}/${node.value}`
@@ -69,6 +69,30 @@ export function folderCreator(node, folderName){
             .then((data) => data);
 }
 
+/**
+ * function to delete file in server directory
+ * 
+ * @param  {Object} node - Current Node
+ */
+export function fileDelete(node, fileName){
+    return deleteFile({path: `${node.path}`,
+            fileName: fileName})
+            .then((res)=>res.json())
+            .then((data) => data);
+}
+
+/**
+ * function to delete folder in server directory
+ * 
+ * @param  {Object} node - Current Node
+ */
+export function folderDelete(node, folderName){
+    return deleteFolder({path: `${node.path}`,
+            folderName: folderName})
+            .then((res)=>res.json())
+            .then((data) => data);
+}
+
 
 /**
  * function to search the node and populate it with the child nodes
@@ -91,10 +115,10 @@ export function searchNodeAndPopulate(fileSystem, currentNode){
 }
 
 /**
- * function to search the node and populate it with the child nodes
+ * function to search the node
  * 
  * @param  {Object} fileSystem - fileSystem (tree structure)
- * @param  {Object} currentNode - Current active node
+ * @param  {Object} parentPath - Current active path
  * @return {Object} fileSystem - Updated file System
  */
 export function searchNode(fileSystem, parentPath) {

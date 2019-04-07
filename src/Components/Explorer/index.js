@@ -1,12 +1,17 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import { MenuProvider } from 'react-contexify';
+import 'react-contexify/dist/ReactContexify.min.css';
+import ContextMenu from './contextMenu';
 import FileComponent from '../Filecomponent/index';
 import FolderComponent from '../Foldercomponent/index';
-import ContextMenu from './contextMenu';
 import InfoModal from '../Createfileorfoldermodal/index';
+import * as actions from './action';
 import './index.scss';
 
 
@@ -33,32 +38,9 @@ class Explorer extends PureComponent {
     super(props);
     this.state = {
       currentNode: props.currentNode,
-      visible: false,
       modalStatus: false
     };
   }
-
-  componentDidMount() {
-    document.addEventListener('contextmenu', this._handleContextMenu);
-    document.addEventListener('click', this._handleClick);
-};
-
-componentWillUnmount() {
-    document.removeEventListener('contextmenu', this._handleContextMenu);
-    document.removeEventListener('click', this._handleClick);
-}
-
-_handleContextMenu = (event) => {
-    event.preventDefault();
-    this.setState({ visible: true });
-};
-
-_handleClick = (event) => {
-    const { visible } = this.state;
-    const wasOutside = !(event.target.contains === this.root);
-    if (wasOutside && visible) this.setState({ visible: false });
-};
-
 
   /**
    * Function to list all the files and folders in a particular directory
@@ -98,15 +80,19 @@ _handleClick = (event) => {
 
   render() {
     const { classes } = this.props;
-    const { visible } = this.state;
     return (
       <div>
         <br/>
       <Grid className={classes.root}>
+        <MenuProvider id='menu_id'>
+          <Grid item xs={12}>
+            <Grid container className={classes.gird} spacing={16}>
+              {this.getContents()}
+            </Grid>
+          </Grid>
+        </MenuProvider>
         <Grid item xs={12}>
           <Grid container className={classes.gird} spacing={16}>
-              {this.getContents()}
-              { (visible || null) ? <ContextMenu /> : null}
             <Grid item xs={2} className="grid_content">
               <Paper onClick={this.openModal.bind(this)} className={`${classes.paper} directory_folder grid_content__paper`}>
                 <div className="directory_folder__image">
@@ -114,9 +100,18 @@ _handleClick = (event) => {
                 </div>
               </Paper>
             </Grid>
-          </Grid>
-        </Grid>
+            </Grid>
+            </Grid>
       </Grid>
+      <ContextMenu
+      fileSystem={this.props.fileSystem}
+      updateDirectory={this.props.updateDirectory}
+      deleteFile={this.props.deleteFile}
+      deleteFolder={this.props.deleteFolder}
+      resetDeleteFlag={this.props.resetDeleteFlag}
+      enterIntoDirectory={this.props.updateCurrentNode}
+      currentNode={this.props.currentNode}
+      />
       {this.state.modalStatus ? <InfoModal 
       fileSystem={this.props.fileSystem}
       updateDirectory={this.props.updateDirectory}
@@ -132,5 +127,19 @@ Explorer.propTypes = {
 };
 
 
+const mapStateToProps = (state) => {
+  state = state.contentReducer.toJS();
+  return {
+    deleteFlag: state.deleteFlag
+  };
+  }; 
 
-export default (withStyles(styles)(Explorer));
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+      ...actions
+  }, dispatch);
+  };
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Explorer));
+
+
