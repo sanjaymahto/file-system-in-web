@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import * as actions from './action';
 import './index.scss'
 
+// material UI styles for modal
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -21,6 +22,7 @@ function getModalStyle() {
   };
 }
 
+//material UI styles for form and paper
 const styles = theme => ({
     paper: {
         position: 'absolute',
@@ -76,6 +78,10 @@ class InfoModal extends React.Component {
         this.setState({ [name]: event.target.value });
     };
 
+    
+    /**
+     * function to create new file or folder in filesystem
+     */
     createFileOrFolder(){
         if(!this.state.name && !this.state.type){
             this.handleClose()
@@ -95,10 +101,10 @@ class InfoModal extends React.Component {
         return (
         <div>
             <Modal
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
-            open={this.state.open}
-            onClose={this.handleClose}>
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                open={this.state.open}
+                onClose={this.handleClose}>
             <div style={getModalStyle()} className={classes.paper}>
                 <Typography className="modal_heading">
                     Create New: 

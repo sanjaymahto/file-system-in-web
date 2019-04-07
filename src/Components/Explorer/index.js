@@ -100,9 +100,10 @@ class Explorer extends PureComponent {
                 </div>
               </Paper>
             </Grid>
-            </Grid>
-            </Grid>
+          </Grid>
+        </Grid>
       </Grid>
+      {/* Context-menu */}
       <ContextMenu
       fileSystem={this.props.fileSystem}
       updateDirectory={this.props.updateDirectory}
@@ -112,6 +113,7 @@ class Explorer extends PureComponent {
       enterIntoDirectory={this.props.updateCurrentNode}
       currentNode={this.props.currentNode}
       />
+      {/* file/Folder Info Modal */}
       {this.state.modalStatus ? <InfoModal 
       fileSystem={this.props.fileSystem}
       updateDirectory={this.props.updateDirectory}

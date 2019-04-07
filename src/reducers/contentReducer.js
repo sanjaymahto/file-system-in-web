@@ -1,6 +1,7 @@
 import { fromJS } from 'immutable';
 import * as CONSTANTS from './constants';
 
+// Initializing Immutable state Store
 const initialState = fromJS({
     // directory contents (i.e files and folders)
     fileSystem: {
@@ -32,7 +33,6 @@ function setFileSystem(state, payload) {
     return state.set('fileSystem', (payload));
 }
 
-
 /**
  * function to set current node into the reducer
  * 
@@ -55,6 +55,7 @@ function setDeleteFlag(state, payload) {
     }
     return state
 }
+
 
 
 /**

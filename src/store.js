@@ -4,6 +4,9 @@ import reducer from './reducers/index';
 
 const middleware = applyMiddleware(thunk);
 
+/**
+ * configuring store to use redux devtools extension
+ */
 export default function configureStore() {
     const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
         window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;

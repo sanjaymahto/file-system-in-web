@@ -9,8 +9,6 @@ import * as actions from './actions';
 import './index.scss';
 import { ROOT } from '../../reducers/constants';
 
-
-
 class Home extends PureComponent {
 
     constructor(props) {
@@ -34,7 +32,7 @@ class Home extends PureComponent {
      * 
      */
     getFiles(){
-        this.props.fetchInfoAndUpDateFileSytem(this.state.fileSystem,this.state.currentNode)
+        this.props.fetchInfoAndUpDateFileSytem(this.state.fileSystem,this.state.currentNode);
     }
 
     /**
@@ -43,7 +41,7 @@ class Home extends PureComponent {
      * @param  {Object} node - Current Node
      */
     updateCurrentNode(node){
-        this.props.fetchInfoAndUpDateFileSytem(this.props.fileSystem,node)
+        this.props.fetchInfoAndUpDateFileSytem(this.props.fileSystem,node);
     }
 
     render() {
@@ -57,16 +55,14 @@ class Home extends PureComponent {
         else {
             return (
                 <>
-                    <Navbar fileSystem = {this.props.fileSystem}
-                            currentNode = {this.props.currentNode}
-                            updateCurrentNode={this.updateCurrentNode.bind(this)}
-                            updateSearchNode={this.props.updateSearchFileSystem}
-                            />
-                    <Explorer currentNode = {this.props.currentNode}
-                    fileSystem = {this.props.fileSystem} 
-                    updateCurrentNode={this.updateCurrentNode.bind(this)}
-                    updateDirectory={this.props.updateDirectory}
-                    />
+                <Navbar fileSystem = {this.props.fileSystem}
+                        currentNode = {this.props.currentNode}
+                        updateCurrentNode={this.updateCurrentNode.bind(this)}
+                        updateSearchNode={this.props.updateSearchFileSystem}/>
+                <Explorer  currentNode = {this.props.currentNode}
+                        fileSystem = {this.props.fileSystem} 
+                        updateCurrentNode={this.updateCurrentNode.bind(this)}
+                        updateDirectory={this.props.updateDirectory}/>
                 </>
             )
         }

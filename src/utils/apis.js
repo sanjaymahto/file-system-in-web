@@ -1,6 +1,12 @@
-import { SERVER_URL , FETCH_FOLDER_CONTENTS, 
-        CREATE_FILE, CREATE_FOLDER,
-        DELETE_FILE, DELETE_FOLDER} from './constants'
+import { 
+    SERVER_URL, 
+    FETCH_FOLDER_CONTENTS, 
+    CREATE_FILE, 
+    CREATE_FOLDER,
+    DELETE_FILE, 
+    DELETE_FOLDER} from './constants';
+
+
 /**
  * function to fetch files from the server
  * 
