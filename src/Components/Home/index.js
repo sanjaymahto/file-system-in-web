@@ -1,114 +1,81 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import FileIcon, { defaultStyles } from 'react-file-icon';
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import Explorer from '../Explorer/index';
 import Navbar from '../Navbar/index';
+import * as actions from './actions';
 import './index.scss';
-
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    height: 100,
-    width: 80,
-    padding: theme.spacing.unit * 2,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }
-});
+import { ROOT } from '../../reducers/constants';
 
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      contents: null,
-    };
-  }
+
+class Home extends PureComponent {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            fileSystem : props.fileSystem,
+            currentNode : props.currentNode,
+            fetchFiles : props.fetchFiles,
+        };
+    }
+
+    static getDerivedStateFromProps(props, state){
+        if(!state.currentNode && props.fileSystem.value === ROOT){
+            return { currentNode : props.fileSystem}
+        }
+        return null;
+    }
+
+    getFiles(){
+        this.props.fetchInfoAndUpDateFileSytem(this.state.fileSystem,this.state.currentNode)
+    }
+
+    updateCurrentNode(node){
+        this.props.fetchInfoAndUpDateFileSytem(this.props.fileSystem,node)
+    }
 
 
-  /**
-   * Function to list all the files and folders in a particular directory
-   * 
-   * @param  {object} props - Style props
-   */
-  getContents = (props) => {
-    const { classes } = props;
-    return (
-      <React.Fragment>
-        <Grid item xs={2} className="grid_content">
-          <Paper className={`${classes.paper} grid_content__paper`}>
-          <FileIcon extension="docx" {...defaultStyles.docx} />
-          File Name
-          </Paper>
-        </Grid>
-        <Grid item xs={2} className="grid_content">
-          <Paper className={`${classes.paper} grid_content__paper`}>
-          <FileIcon extension="ppt" {...defaultStyles.ppt} />
-          File Name
-          </Paper>
-        </Grid>
-        <Grid item xs={2} className="grid_content">
-          <Paper className={`${classes.paper} grid_content__paper`}>
-          <FileIcon extension="pdf" {...defaultStyles.pdf} />
-          File Name
-          </Paper>
-        </Grid>
-        <Grid item xs={2} className="grid_content">
-          <Paper className={`${classes.paper} grid_content__paper`}>
-          <FileIcon extension="html" {...defaultStyles.html} />
-          File Name
-          </Paper>
-        </Grid>
-        <Grid item xs={2} className="grid_content">
-          <Paper className={`${classes.paper} grid_content__paper`}>
-          <FileIcon extension="png" {...defaultStyles.png} />
-          File Name
-          </Paper>
-        </Grid>
-        <Grid item xs={2} className="grid_content">
-          <Paper className={`${classes.paper} directory_folder grid_content__paper`}>
-            <div className="directory_folder__image">
-              <img src="https://img.icons8.com/nolan/64/000000/opened-folder.png" alt="Folder"/>
-              Folder
-            </div>
-          </Paper>
-        </Grid>
-      </React.Fragment>
-    );
-  }
-
-
-  render() {
-    const { classes } = this.props;
-    return (
-      <div>
-      <Navbar />
-      <br/>
-      <Grid className={classes.root}>
-        <Grid item xs={12}>
-        <Grid container className={classes.demo} spacing={16}>
-              {this.getContents(this.props)}
-          <Grid item xs={2} className="grid_content">
-            <Paper className={`${classes.paper} directory_folder grid_content__paper`}>
-              <div className="directory_folder__image">
-                <img src={window.location.origin + '/addFileOrFolder.svg'} alt="addFileOrFolder"/>
-              </div>
-            </Paper>
-          </Grid>
-        </Grid>
-        </Grid>
-      </Grid>
-      </div>
-    );
-  }
+    render() {
+        if(this.props.fetchFiles){
+            // TODO: to put a loader while fetching files...
+            this.getFiles();
+            return (<></>)
+        }
+        else {
+            return (
+                <>
+                    <Navbar fileSystem = {this.props.fileSystem}
+                            currentNode = {this.props.currentNode}
+                            updateCurrentNode={this.updateCurrentNode.bind(this)}
+                            updateSearchNode={this.props.updateSearchFileSystem}
+                            />
+                    <Explorer currentNode = {this.props.currentNode} updateCurrentNode={this.updateCurrentNode.bind(this)}/>
+                </>
+            )
+        }
+    }
 }
 
-Home.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+    Home.propTypes = {
+    fileSystem: PropTypes.object,
+    currentNode: PropTypes.object
+    };
 
-export default withStyles(styles)(Home);
+    const mapStateToProps = (state) => {
+    state = state.contentReducer.toJS();
+    return {
+        fileSystem: state.fileSystem,
+        currentNode: state.currentNode,
+        fetchFiles:state.fetchFiles
+    };
+    };
+
+    const mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+        ...actions
+    }, dispatch);
+    };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
