@@ -75,6 +75,7 @@ class  Navbar extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      query: '',
       currentNode: props.currentNode,
       fileSystem: props.fileSystem
     }
@@ -88,6 +89,32 @@ class  Navbar extends PureComponent {
     }
   }
 
+  setQuery(event){
+    this.setState({
+      query: event.target.value
+    })
+  }
+
+
+  updateCurrentSearch = () => {
+    let node = [];
+    let searchContent = this.state.query;
+    let currentNode = this.props.currentNode;
+    let curNode = this.props.currentNode.nodes;
+    for(let i=0; i<curNode.length;i++){ 
+      if(curNode[i].value === searchContent){
+            node.push(curNode[i])
+            break;
+      }
+    }
+    if(!node.length){
+      this.props.updateCurrentNode(searchNode(this.props.fileSystem, this.props.currentNode.path));
+    } else {
+    currentNode.nodes = node
+    this.props.updateSearchNode(this.props.fileSystem,currentNode);
+    }
+    
+  }
 
   render() {
     const { classes } = this.props;
@@ -106,6 +133,12 @@ class  Navbar extends PureComponent {
                     <SearchIcon />
                   </div>
                 <InputBase
+                  onChange={this.setQuery.bind(this)}
+                  onKeyPress={event => {
+                      if (event.key === 'Enter') {
+                          this.updateCurrentSearch()
+                      }
+                  }}
                   placeholder="Search…"
                   classes={{
                     root: classes.inputRoot,

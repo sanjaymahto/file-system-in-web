@@ -36,6 +36,7 @@ class Home extends PureComponent {
         this.props.fetchInfoAndUpDateFileSytem(this.props.fileSystem,node)
     }
 
+
     render() {
         if(this.props.fetchFiles){
             // TODO: to put a loader while fetching files...
@@ -47,7 +48,9 @@ class Home extends PureComponent {
                 <>
                     <Navbar fileSystem = {this.props.fileSystem}
                             currentNode = {this.props.currentNode}
-                            updateCurrentNode={this.updateCurrentNode.bind(this)} />
+                            updateCurrentNode={this.updateCurrentNode.bind(this)}
+                            updateSearchNode={this.props.updateSearchFileSystem}
+                            />
                     <Explorer currentNode = {this.props.currentNode} updateCurrentNode={this.updateCurrentNode.bind(this)}/>
                 </>
             )
