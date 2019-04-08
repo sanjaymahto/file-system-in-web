@@ -7,6 +7,24 @@ import {
     DELETE_FOLDER} from './constants';
 
 
+    /**
+     * function to generate the body for post request
+     * 
+     * @param  {String} params - body params
+     */
+    function bodyGenerator(params){
+        return {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: params
+        }
+    }
+
+
+
 /**
  * function to fetch files from the server
  * 
@@ -14,14 +32,8 @@ import {
  * @return {Promise} Promise
  */
 export function getFiles(path) {
-    return fetch(`${SERVER_URL}${FETCH_FOLDER_CONTENTS}`, {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({'path' : path})
-    });
+    let params = JSON.stringify({'path' : path});
+    return fetch(`${SERVER_URL}${FETCH_FOLDER_CONTENTS}`, bodyGenerator(params));
 }
 
 /**
@@ -31,14 +43,8 @@ export function getFiles(path) {
  * @return {Promise} Promise
  */
 export function createFile(fileObj) {
-    return fetch(`${SERVER_URL}${CREATE_FILE}`, {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({'path' : fileObj.path, 'fileName': fileObj.fileName})
-    });
+    let params = JSON.stringify({'path' : fileObj.path, 'fileName': fileObj.fileName});
+    return fetch(`${SERVER_URL}${CREATE_FILE}`, bodyGenerator(params));
 }
 
 /**
@@ -48,14 +54,8 @@ export function createFile(fileObj) {
  * @return {Promise} Promise
  */
 export function createFolder(folderObj) {
-    return fetch(`${SERVER_URL}${CREATE_FOLDER}`, {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({'path' : folderObj.path, 'folderName': folderObj.folderName})
-    });
+    let params = JSON.stringify({'path' : folderObj.path, 'fileName': folderObj.fileName});
+    return fetch(`${SERVER_URL}${CREATE_FOLDER}`, bodyGenerator(params));
 }
 
 /**
@@ -65,14 +65,8 @@ export function createFolder(folderObj) {
  * @return {Promise} Promise
  */
 export function deleteFile(fileObj) {
-    return fetch(`${SERVER_URL}${DELETE_FILE}`, {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({'path' : fileObj.path, 'fileName': fileObj.fileName})
-    });
+    let params = JSON.stringify({'path' : fileObj.path, 'fileName': fileObj.fileName});
+    return fetch(`${SERVER_URL}${DELETE_FILE}`, bodyGenerator(params));
 }
 
 /**
@@ -82,12 +76,6 @@ export function deleteFile(fileObj) {
  * @return {Promise} Promise
  */
 export function deleteFolder(folderObj) {
-    return fetch(`${SERVER_URL}${DELETE_FOLDER}`, {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({'path' : folderObj.path, 'folderName': folderObj.folderName})
-    });
+    let params = JSON.stringify({'path' : folderObj.path, 'fileName': folderObj.fileName});   
+    return fetch(`${SERVER_URL}${DELETE_FOLDER}`, bodyGenerator(params));
 }
