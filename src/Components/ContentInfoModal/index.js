@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -26,7 +26,7 @@ const styles = theme => ({
   },
 });
 
-class ContentInfoModal extends React.Component {
+class ContentInfoModal extends PureComponent {
 
     constructor(props) {
         super(props);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -49,7 +49,7 @@ const styles = theme => ({
     }
 });
 
-class InfoModal extends React.Component {
+class InfoModal extends PureComponent {
 
     constructor(props) {
         super(props);
