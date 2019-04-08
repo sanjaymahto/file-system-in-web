@@ -33,18 +33,52 @@ Client App
 ### Features:
 
 1. The web app mounts to the root route i.e. “/” This would list all subdirectories to root.
+
 2. The app will also display the “current path” in the navbar
-3. Double-clicking directory should update the “current path” as well as change the view with all the files & folders present inside this new directory.
+
+3. A double-clicking directory should update the “current path” as well as change the view with all the files & folders present inside this new directory.
+
 4. There will be an Up button which will lead you one step above in the directory structure.
-5. On right click of a file/folder, secondary menu popups with 3 options
 
-● Open - navigate into the folder, open info popup
+5. On right click of a file/folder, secondary menu popups with 3 options:
 
-● Get Info - Opens info popup for both file & folder.
+       ● Open - navigate into the folder, open info popup
 
-● Delete - remove file/folder from the system
+       ● Get Info - Opens info popup for both file & folder.
 
+       ● Delete - remove file/folder from the system
 6. Each folder would have a Create/Add button, which would trigger a popup to create a new file/folder with associated meta fields - name(with the extension for files), creator, size and date.
 
 7. Search Implementation Added(local Search in the current Directory).
 
+### App Flow
+
+1. The web app mounts to the root route i.e. “/dummy” This would list all subdirectories to root.
+
+2. The app also displays the “current path” in the navbar
+
+3. Double-clicking directory updates the “current path” as well as change the view with all the files & folders present inside this new directory.
+
+4. There's an Up arrow button which on click will lead you one step above in the directory structure.
+
+5. On right click of a file/folder, secondary menu popups with 3 options:
+
+      ● Open - navigate into the folder, open info popup
+
+      ● Get Info - Opens info popup for both file & folder.
+
+      ● Delete - remove file/folder from the system
+
+6. Each folder has a Create/Add button, which triggers a popup to create a new file/folder with associated meta fields - name(with the extension for files), creator, size and date.
+
+7. Search Implementation flow:
+
+   ● Enter a file or folder name to be searched (Case Sensitive) 
+        and hit enter.
+
+   ● A found file will be displayed in the current directory.
+
+   ● To bring back the original contents clear the text from 
+        the search box and hit enter.
+
+8. Press the Hamburger icon to open the side bar menu.
