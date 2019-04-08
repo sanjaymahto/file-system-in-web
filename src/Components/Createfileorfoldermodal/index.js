@@ -56,7 +56,7 @@ class InfoModal extends PureComponent {
         this.state = {
             type: '',
             open: true,
-            name:'',
+            name: '',
             creator:'',
             size:'',
             date: (new Date()).toLocaleDateString()
@@ -83,7 +83,7 @@ class InfoModal extends PureComponent {
      * function to create new file or folder in filesystem
      */
     createFileOrFolder(){
-        if(!this.state.name && !this.state.type){
+        if(!this.state.name || !this.state.type){
             this.handleClose()
         } else {
         if(this.state.type === 'file'){

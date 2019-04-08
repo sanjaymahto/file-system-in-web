@@ -84,13 +84,14 @@ class Explorer extends PureComponent {
       <div>
         <br/>
       <Grid className={classes.root}>
-        <MenuProvider id='menu_id'>
           <Grid item xs={12}>
+            <MenuProvider id='menu_id'>
             <Grid container className={classes.gird} spacing={16}>
               {this.getContents()}
             </Grid>
+            </MenuProvider>
           </Grid>
-        </MenuProvider>
+          <br/>
         <Grid item xs={12}>
           <Grid container className={classes.gird} spacing={16}>
             <Grid item xs={2} className="grid_content">
