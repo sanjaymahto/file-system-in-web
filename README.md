@@ -22,21 +22,10 @@ See the section about [deployment];
 
 ### How to Start Application
 
-First start the server, then Client
-
 Client App
 
-   1.) Open Client folder in VSCode.
+   1.) Open file-System folder in VSCode.
    
    2.) Run npm install to install all the dependencies.
 
    3.) Run client-server - `npm start`.
-
-
-Server 
-
-  1.) Open Server folder in VSCode.
-
-  2.) Run npm install to install all the dependencies.
-
-  3.) Run server - `npm start`.
