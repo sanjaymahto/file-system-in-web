@@ -54,7 +54,7 @@ export function createFile(fileObj) {
  * @return {Promise} Promise
  */
 export function createFolder(folderObj) {
-    let params = JSON.stringify({'path' : folderObj.path, 'fileName': folderObj.fileName});
+    let params = JSON.stringify({'path' : folderObj.path, 'folderName': folderObj.folderName});
     return fetch(`${SERVER_URL}${CREATE_FOLDER}`, bodyGenerator(params));
 }
 
@@ -76,6 +76,6 @@ export function deleteFile(fileObj) {
  * @return {Promise} Promise
  */
 export function deleteFolder(folderObj) {
-    let params = JSON.stringify({'path' : folderObj.path, 'fileName': folderObj.fileName});   
+    let params = JSON.stringify({'path' : folderObj.path, 'folderName': folderObj.folderName});   
     return fetch(`${SERVER_URL}${DELETE_FOLDER}`, bodyGenerator(params));
 }
