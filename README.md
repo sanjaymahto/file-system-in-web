@@ -30,7 +30,7 @@ Client App
 
    3.) Run client-server - `npm start`.
 
-Features:
+### Features:
 
 1. The web app mounts to the root route i.e. “/” This would list all subdirectories to root.
 2. The app will also display the “current path” in the navbar
