@@ -79,6 +79,19 @@ class InfoModal extends PureComponent {
         this.setState({ [name]: event.target.value });
     };
     
+
+    /**
+     * function to be called when component props gets updated
+     * 
+     */
+    componentDidUpdate(){
+        if(this.props.createFlag) {
+            this.handleClose();
+            this.props.updateDirectory(this.props.fileSystem,this.props.currentNode);
+            this.props.resetCreateFlag();
+        }
+    }
+
     /**
      * function to create new file or folder in filesystem
      */
@@ -91,9 +104,6 @@ class InfoModal extends PureComponent {
         } else {
             this.props.createFolder(this.props.currentNode, this.state.name);
         }
-        this.props.resetCreateFlag();
-        this.props.updateDirectory(this.props.fileSystem,this.props.currentNode);
-        this.handleClose()
     }
 }
 
