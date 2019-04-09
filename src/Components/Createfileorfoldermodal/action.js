@@ -40,7 +40,6 @@ export const createFolder = (fileSystem, folderName) => dispatch => {
  * 
  */
 export function resetCreateFlag() {
-    console.log('resetFlag called: ');
     return {
         type: CONSTANTS.RESET_CREATE_FLAG,
         payload: false
