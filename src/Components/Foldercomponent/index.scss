@@ -1,8 +1,11 @@
 .directory_folder {
     height: 85%;
     text-align: center;
-        @at-root #{&}__image {
-            margin-top: 25%;
+        @at-root #{&}__title {
+            width: 80px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 }
 

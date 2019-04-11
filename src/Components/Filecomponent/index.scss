@@ -3,4 +3,11 @@
         @at-root #{&}__paper {
         display: inline-block;
         }
+        @at-root #{&}__title {
+            width: 80px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top:5px;
+        }
 }

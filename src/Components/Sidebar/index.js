@@ -31,7 +31,12 @@ class SideBar extends Component {
    * @param  {Object} event
    */
   enterDirectoryEvent(node) {
-      this.props.updateExplorer(searchNode(this.props.files, `${node.parent.path}`));
+    if(node.value) {
+      let textArray = node.value.split('.');
+      if(textArray.length === 1){
+        this.props.updateExplorer(searchNode(this.props.files, `${node.parent.path}/${node.value}`));
+      } 
+  }
   }
 
 
@@ -46,7 +51,7 @@ class SideBar extends Component {
               <div  className="directory_sidebar" tabIndex={0} role="button" onClick={this.toggleDrawer('top', false)}
                 onKeyDown={this.toggleDrawer('top', false)}>
                 <p style={{paddingLeft:'5px'}}>{this.props.rootPath}</p>
-                <MuiTreeView onLeafClick={this.enterDirectoryEvent.bind(this)} tree={[this.props.files]} />
+                <MuiTreeView onLeafClick={this.enterDirectoryEvent.bind(this)}  tree={[this.props.files]} />
               </div>
           </SwipeableDrawer>
         </div>

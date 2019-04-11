@@ -28,7 +28,7 @@ class  FileComponent extends PureComponent {
                 <Grid item xs={2} className="grid_content">
                     <Paper className={`${classes.paper} grid_content__paper`}>
                     <FileIcon extension={item.type} {...defaultStyles} />
-                        {item.value}
+                        <p className="grid_content__title">{item.value}</p>
                     </Paper>
                 </Grid>);
     }
