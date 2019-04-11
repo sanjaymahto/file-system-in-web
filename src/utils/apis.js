@@ -1,5 +1,6 @@
 import { 
     SERVER_URL, 
+    FETCH_ALL_FILES_AND_FOLDER,
     FETCH_FOLDER_CONTENTS, 
     CREATE_FILE, 
     CREATE_FOLDER,
@@ -34,6 +35,17 @@ import {
 export function getFiles(path) {
     let params = JSON.stringify({'path' : path});
     return fetch(`${SERVER_URL}${FETCH_FOLDER_CONTENTS}`, bodyGenerator(params));
+}
+
+/**
+ * function to fetch all files/folders from the server
+ * 
+ * @param  {String} path - path of the directory
+ * @return {Promise} Promise
+ */
+export function getTree(path) {
+    let params = JSON.stringify({'path' : path});
+    return fetch(`${SERVER_URL}${FETCH_ALL_FILES_AND_FOLDER}`, bodyGenerator(params));
 }
 
 /**

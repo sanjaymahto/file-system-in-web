@@ -1,6 +1,7 @@
 export const ROOT = 'dummy'
 export const ERROR = 'ERROR';
 export const SET_FILE_SYSTEM = 'SET_FILE_SYSTEM';
+export const SET_FILE_SYSTEM_TREE = 'SET_FILE_SYSTEM_TREE';
 export const SET_CURRENT_NODE = 'SET_CURRENT_NODE';
 export const FILE_FETCH_SUCCESS = 'FILE_FETCH_SUCCESS';
 export const FILE_FETCH_INITIATED = 'FILE_FETCH_INITIATED';

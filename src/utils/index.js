@@ -1,4 +1,4 @@
-import { getFiles, createFile, createFolder, deleteFile, deleteFolder } from './apis';
+import { getFiles, getTree, createFile, createFolder, deleteFile, deleteFolder } from './apis';
 
 /**
  * function to restructure the schema for the fileSystem
@@ -43,6 +43,18 @@ export function getNodeInfo(node){
     return getFiles(`${node.parentPath}/${node.value}`)
             .then((res)=>res.json())
             .then((res)=>setChildren(node,formatChildren(node,res.files)))
+}
+
+
+/**
+ * function to get tree info
+ * 
+ * @param  {Object} node - Current Node
+ */
+export function getTreeInfo(path){
+    return getTree(path)
+            .then((res)=>res.json())
+            .then((res)=> res)
 }
 
 /**
@@ -133,6 +145,16 @@ export function searchNode(fileSystem, parentPath) {
         }
     }
     return null;
+}
+
+
+export function updateTreeStructure(node) {
+    node.value = node.name;
+    node.nodes = node.children || [];
+    for(let i=0;i<node.nodes.length;i++){
+        updateTreeStructure(node.nodes[i]);
+    }
+    return node;
 }
 
 /**

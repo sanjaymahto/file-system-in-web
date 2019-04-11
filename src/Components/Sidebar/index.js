@@ -1,10 +1,9 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import MuiTreeView from 'material-ui-treeview';
-import { searchNode } from '../../utils/index';
 import './index.scss'
 
-class SideBar extends Component {
+class SideBar extends PureComponent {
 
     constructor(props) {
         super(props)
@@ -25,15 +24,6 @@ class SideBar extends Component {
     });
   };
 
-  /**
-   * function to trigger when clicking an directory from sidebar 
-   * 
-   * @param  {Object} event
-   */
-  enterDirectoryEvent(node) {
-      this.props.updateExplorer(searchNode(this.props.files, `${node.parent.path}`));
-  }
-
 
   render() {
     return (
@@ -46,7 +36,7 @@ class SideBar extends Component {
               <div  className="directory_sidebar" tabIndex={0} role="button" onClick={this.toggleDrawer('top', false)}
                 onKeyDown={this.toggleDrawer('top', false)}>
                 <p style={{paddingLeft:'5px'}}>{this.props.rootPath}</p>
-                <MuiTreeView onLeafClick={this.enterDirectoryEvent.bind(this)} tree={[this.props.files]} />
+                <MuiTreeView tree={[this.props.files]} />
               </div>
           </SwipeableDrawer>
         </div>

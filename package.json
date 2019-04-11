@@ -10,6 +10,7 @@
     "node-sass": "^4.11.0",
     "react": "^16.8.6",
     "react-contexify": "^4.0.2",
+    "react-d3-tree": "^1.12.3",
     "react-dom": "^16.8.6",
     "react-file-icon": "^0.2.0",
     "react-loader-spinner": "^2.3.0",

@@ -1,5 +1,5 @@
 import * as CONSTANTS from '../../reducers/constants';
-import { getNodeInfo ,updateFileSystem, searchNode} from '../../utils'
+import { getNodeInfo, getTreeInfo, updateFileSystem, searchNode, updateTreeStructure} from '../../utils'
 
 /**
  * function to set files to the reducer
@@ -111,4 +111,23 @@ export const fetchInfoAndUpDateFileSytem = (fileSystem,currentNode) => dispatch 
     return {
         type:CONSTANTS.FILE_FETCH_INITIATED
     }
+}
+
+/**
+ * function to update the tree file system for sideBar
+ * 
+ * @param  {Object} fileSystem - root directory
+ * @param  {Object} currentNode - current Node or Directory
+ */
+export const fetchAndUpdateTree = () => dispatch =>{
+    getTreeInfo(`${CONSTANTS.ROOT}`)
+        .then(res =>{
+            dispatch({
+                type: CONSTANTS.SET_FILE_SYSTEM_TREE,
+                payload: updateTreeStructure(res)
+            });
+        })
+        .catch(e=>{
+            dispatch(fileFetchFailed());
+        });
 }

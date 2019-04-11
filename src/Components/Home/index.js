@@ -33,6 +33,7 @@ class Home extends PureComponent {
      */
     getFiles(){
         this.props.fetchInfoAndUpDateFileSytem(this.state.fileSystem,this.state.currentNode);
+        this.props.fetchAndUpdateTree();
     }
 
     /**
@@ -56,6 +57,7 @@ class Home extends PureComponent {
             return (
                 <>
                 <Navbar fileSystem = {this.props.fileSystem}
+                        directoryTree = {this.props.directoryTree}
                         currentNode = {this.props.currentNode}
                         updateCurrentNode={this.updateCurrentNode.bind(this)}
                         updateSearchNode={this.props.updateSearchFileSystem}/>
@@ -71,7 +73,10 @@ class Home extends PureComponent {
 
     Home.propTypes = {
     fileSystem: PropTypes.object,
-    currentNode: PropTypes.object
+    currentNode: PropTypes.object,
+    fetchFiles: PropTypes.bool,
+    directoryTree: PropTypes.object,
+
     };
 
     const mapStateToProps = (state) => {
@@ -79,7 +84,8 @@ class Home extends PureComponent {
     return {
         fileSystem: state.fileSystem,
         currentNode: state.currentNode,
-        fetchFiles:state.fetchFiles
+        fetchFiles:state.fetchFiles,
+        directoryTree: state.directoryTree
     };
     };
 

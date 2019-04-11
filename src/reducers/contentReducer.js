@@ -14,6 +14,8 @@ const initialState = fromJS({
         path:`/${CONSTANTS.ROOT}`,
         parentPath:''
     },
+    // all files and folders from directory
+    directoryTree: null,
     //current node for explorer
     currentNode: null,
     //fetch status
@@ -33,6 +35,16 @@ const initialState = fromJS({
  */
 function setFileSystem(state, payload) {
     return state.set('fileSystem', (payload));
+}
+
+/**
+ * function to set tree file System into reducer
+ * 
+ * @param  {Object} state - state Object
+ * @param  {Object} payload - payload Object
+ */
+function setTreeSystem(state, payload) {
+        return state.set('directoryTree', (payload));
 }
 
 /**
@@ -87,6 +99,8 @@ function contentReducer(state = initialState, action) {
         switch (type) {
         case CONSTANTS.SET_FILE_SYSTEM:
             return setFileSystem(state, payload);
+        case CONSTANTS.SET_FILE_SYSTEM_TREE:
+            return setTreeSystem(state, payload);
         case CONSTANTS.SET_CURRENT_NODE:
             return setCurrentNode(state, payload);
         case CONSTANTS.FILE_FETCH_SUCCESS:
